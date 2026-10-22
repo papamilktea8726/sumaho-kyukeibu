@@ -1,0 +1,62 @@
+name: Android APKを作る
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: 部品をインストール
+        run: npm ci
+
+      - name: アプリ画面を作る（web/index.html → www/index.html）
+        run: python3 tools/build_www.py web/index.html
+
+      - name: Androidに反映
+        run: npx cap sync android
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: APKをビルド
+        working-directory: android
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+          mkdir -p ../dist
+          cp app/build/outputs/apk/debug/app-debug.apk ../dist/sumaho-kyukeibu-v1.0.${{ github.run_number }}.apk
+
+      - name: ビルド結果を保存
+        uses: actions/upload-artifact@v4
+        with:
+          name: sumaho-kyukeibu-apk
+          path: dist/*.apk
+
+      - name: スマホからダウンロードできるように公開（Releases）
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: スマホ休憩部 テスト版 v1.0.${{ github.run_number }}
+          body: |
+            Androidスマホでこのページを開き、下の .apk をタップしてインストールしてください。
+            （テスト版です。初回は「提供元不明のアプリ」の許可が必要です）
+          files: dist/*.apk
+          make_latest: true

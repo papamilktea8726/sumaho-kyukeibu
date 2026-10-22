@@ -1,0 +1,487 @@
+<title>スマホ休憩部</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="theme-color" content="#0B8A8F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: one phone-width column — island stage on top, controls below, tab bar fixed at the bottom; focus mode takes over the whole screen. */
+:root{
+  --bg:#E6F4F5; --surface:#FFFFFF; --surface2:#F2FAFA; --ink:#12343B; --muted:#557A80; --line:#CBE3E5;
+  --accent:#0B8A8F; --accent-ink:#FFFFFF; --accent-soft:#D3EFEF; --coin:#E9A91E; --coin-soft:#FFF1CC;
+  --sea1:#8ED8DE; --sea2:#46AFBF; --foam:#FFFFFF; --sand:#F1DCA0; --sand2:#E2C47F;
+  --grass:#86C86F; --grass2:#62AC57; --leaf:#3F9A50; --leaf2:#2F8243; --wood:#9A6B43;
+  --roof:#E0644F; --wall:#FFF6E6; --tent:#F2A541; --rock:#A9B6B8; --window:#BDE7F0; --dark:#24323A;
+  --good:#2E9E5B;
+  --f-display:"Dela Gothic One","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-body:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0A1C24; --surface:#112C36; --surface2:#0E2530; --ink:#E3F2F3; --muted:#8DB0B5; --line:#1F4450;
+  --accent:#3FC8CB; --accent-ink:#04222A; --accent-soft:#143F47; --coin:#F5C84A; --coin-soft:#3A3318;
+  --sea1:#18506060; --sea2:#0D3644; --foam:#7FB9C4; --sand:#C8B27E; --sand2:#A98F5C;
+  --grass:#4F914A; --grass2:#3D7A3B; --leaf:#2F7D44; --leaf2:#246535; --wood:#7E5737;
+  --roof:#C2513F; --wall:#E8DCC6; --tent:#D88E34; --rock:#7D8A8D; --window:#F6D66B; --dark:#0A141A;
+  --good:#4CC67F; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0A1C24; --surface:#112C36; --surface2:#0E2530; --ink:#E3F2F3; --muted:#8DB0B5; --line:#1F4450;
+  --accent:#3FC8CB; --accent-ink:#04222A; --accent-soft:#143F47; --coin:#F5C84A; --coin-soft:#3A3318;
+  --sea1:#18506060; --sea2:#0D3644; --foam:#7FB9C4; --sand:#C8B27E; --sand2:#A98F5C;
+  --grass:#4F914A; --grass2:#3D7A3B; --leaf:#2F7D44; --leaf2:#246535; --wood:#7E5737;
+  --roof:#C2513F; --wall:#E8DCC6; --tent:#D88E34; --rock:#7D8A8D; --window:#F6D66B; --dark:#0A141A;
+  --good:#4CC67F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.app{max-width:480px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px calc(92px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:14px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;flex-direction:column;line-height:1.15}
+.brand b{font-family:var(--f-display);font-weight:400;font-size:22px;letter-spacing:.02em}
+.brand small{color:var(--muted);font-size:11.5px;font-weight:500}
+.coins{display:flex;align-items:center;gap:6px;background:var(--coin-soft);color:var(--ink);padding:6px 12px 6px 8px;border-radius:999px;font-weight:800;font-variant-numeric:tabular-nums}
+.coin-ico{width:20px;height:20px;border-radius:50%;background:var(--coin);box-shadow:inset 0 -2px 0 rgba(0,0,0,.15);display:grid;place-items:center;font-size:11px;color:var(--dark);font-weight:800}
+.coins.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.18)}}
+
+.stage{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,var(--sea1),var(--sea2));aspect-ratio:400/270;max-width:100%}
+.stage svg{display:block;width:100%;height:100%}
+.lv{position:absolute;left:12px;top:10px;background:var(--surface);border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700;display:flex;gap:8px;align-items:center}
+.lv b{font-family:var(--f-display);font-weight:400}
+.wave{animation:drift 6s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(10px)}}
+@media (prefers-reduced-motion:reduce){.wave,.coins.bump,.sprout-grow{animation:none!important}}
+
+.progress{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .6s}
+
+.panel{background:var(--surface);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:12px}
+.panel h2{margin:0;font-family:var(--f-display);font-weight:400;font-size:17px;text-wrap:balance}
+.label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.06em}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.chip{border:2px solid var(--line);border-radius:14px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;line-height:1.2;gap:3px;background:var(--surface2)}
+.chip b{font-family:var(--f-display);font-weight:400;font-size:22px}
+.chip span{font-size:11.5px;color:var(--muted);font-weight:700}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.trial{justify-self:start;font-size:12.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;padding:2px 0;font-weight:500}
+.trial[aria-pressed="true"]{color:var(--accent);font-weight:800}
+.mission-btn{display:flex;align-items:center;justify-content:space-between;gap:10px;border:2px dashed var(--line);border-radius:14px;padding:10px 12px;text-align:left;width:100%}
+.mission-btn span{min-width:0}
+.mission-btn em{font-style:normal;color:var(--accent);font-weight:800;font-size:13px;white-space:nowrap}
+.primary{background:var(--accent);color:var(--accent-ink);border-radius:16px;padding:14px;font-weight:800;font-size:17px;box-shadow:0 4px 0 color-mix(in srgb,var(--accent) 60%,var(--dark));transition:transform .1s}
+.primary:active{transform:translateY(3px);box-shadow:0 1px 0 color-mix(in srgb,var(--accent) 60%,var(--dark))}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.ghost{border:2px solid var(--line);border-radius:14px;padding:10px 14px;font-weight:700}
+.note{font-size:12px;color:var(--muted);margin:0}
+.sleep{display:grid;grid-template-columns:1fr auto;gap:10px 12px;align-items:center}
+.sleep p{margin:0;font-size:13px;color:var(--muted)}
+.sleep input{font:inherit;font-weight:800;font-size:16px;border:2px solid var(--line);border-radius:12px;padding:6px 8px;background:var(--surface2);color:var(--ink);font-variant-numeric:tabular-nums}
+.sleep .row{grid-column:1/-1;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+/* shop */
+.shop{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.item{background:var(--surface);border-radius:var(--r);padding:10px 10px 12px;display:flex;flex-direction:column;gap:6px;align-items:stretch}
+.item svg{width:100%;height:76px;background:var(--surface2);border-radius:12px}
+.item .name{font-weight:800;display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+.item .name small{font-weight:500;color:var(--muted);font-size:11.5px}
+.buy{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:8px;background:var(--accent-soft);font-weight:800;font-variant-numeric:tabular-nums}
+.buy:disabled{opacity:.5;cursor:not-allowed}
+.buy .coin-ico{width:16px;height:16px;font-size:9px}
+
+/* records */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface);border-radius:var(--r);padding:12px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.stat b{font-family:var(--f-display);font-weight:400;font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat span{font-size:11.5px;color:var(--muted);font-weight:700}
+.chart svg{width:100%;height:auto;display:block}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.badge{border-radius:14px;padding:10px 6px;text-align:center;background:var(--surface2);display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;font-weight:700;line-height:1.3}
+.badge .medal{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:15px;background:var(--line);color:var(--muted)}
+.badge.got .medal{background:var(--coin);color:var(--dark);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+.badge:not(.got){color:var(--muted)}
+.hist{display:flex;flex-direction:column;gap:6px;margin:0;padding:0;list-style:none}
+.hist li{display:flex;justify-content:space-between;gap:10px;font-size:13px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.hist li span:last-child{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* tabs */
+.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));z-index:5}
+.tabs div{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;border-radius:12px;font-size:12px;font-weight:700;color:var(--muted)}
+.tab svg{width:24px;height:24px}
+.tab[aria-selected="true"]{color:var(--accent);background:var(--accent-soft)}
+
+/* focus overlay */
+.focus{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:calc(24px + env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));text-align:center}
+.focus .kind{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:.08em}
+.ring{position:relative;width:min(74vw,290px);aspect-ratio:1;max-width:100%}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.time{font-family:var(--f-display);font-size:clamp(40px,13vw,58px);line-height:1;font-variant-numeric:tabular-nums}
+.focus .msg{max-width:30ch;margin:0;color:var(--muted);font-size:14px}
+.focus .mtag{background:var(--surface);border-radius:999px;padding:6px 14px;font-weight:700;font-size:13.5px}
+.sprout-grow{transform-origin:50% 100%;transition:transform 1s}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:30;background:color-mix(in srgb,var(--dark) 55%,transparent);display:flex;align-items:flex-end;justify-content:center;padding:16px max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.sheet{background:var(--surface);border-radius:24px;padding:20px;width:100%;max-width:440px;display:flex;flex-direction:column;gap:14px;max-height:85vh;overflow:auto}
+.sheet h3{margin:0;font-family:var(--f-display);font-weight:400;font-size:20px;text-wrap:balance}
+.sheet p{margin:0}
+.reward{font-family:var(--f-display);font-size:34px;color:var(--coin);display:flex;align-items:center;gap:8px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap}
+.btnrow>*{flex:1 1 140px}
+.mgroup{display:flex;flex-direction:column;gap:6px}
+.mlist{display:flex;flex-wrap:wrap;gap:6px}
+.mchip{border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:700;background:var(--surface2)}
+.mchip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-weight:700;font-size:13.5px;z-index:40;max-width:calc(100% - 32px);text-align:center}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="brand"><b>スマホ休憩部</b><small>スマホを置くと、島が育つ。</small></div>
+    <div class="coins" id="coins" aria-label="コイン"><span class="coin-ico">¢</span><span id="coinNum">0</span></div>
+  </header>
+
+  <section id="view-island" class="view" style="display:flex;flex-direction:column;gap:14px">
+    <div class="stage">
+      <div class="lv">島レベル <b id="lvNum">1</b></div>
+      <svg id="island" viewBox="0 0 400 270" role="img" aria-label="あなたの島"></svg>
+    </div>
+    <div class="progress"><div class="bar"><i id="lvBar" style="width:0"></i></div><span id="lvText"></span></div>
+
+    <div class="panel">
+      <h2>スマホ休憩チャレンジ</h2>
+      <div class="chips" id="durChips"></div>
+      <button class="trial" id="trialBtn" aria-pressed="false">動作テスト用：お試し1分</button>
+      <span class="label">休憩中にやること（えらばなくてもOK）</span>
+      <button class="mission-btn" id="missionBtn"><span id="missionText">ミッションなし</span><em>えらぶ</em></button>
+      <button class="primary" id="startBtn">チャレンジ開始</button>
+      <p class="note">開始したら画面を閉じて、スマホを置こう。時間がたってから戻ると、コインがもらえます。このアプリはスマホの操作を検知しません。自分との約束です。</p>
+    </div>
+
+    <div class="panel">
+      <h2>おやすみチャレンジ</h2>
+      <div class="sleep">
+        <p>寝る前にスマホを置いて、起きる時間まで触らない。成功するとペット「<span id="petName">ペンペン</span>」が育ちます。</p>
+        <svg viewBox="0 0 60 60" width="60" height="60" id="petPreview" aria-hidden="true"></svg>
+        <div class="row"><label for="wakeInput" class="label">起きる時間</label><input type="time" id="wakeInput" value="07:00"><button class="ghost" id="sleepBtn">おやすみ</button></div>
+      </div>
+      <p class="note" id="petStage"></p>
+    </div>
+  </section>
+
+  <section id="view-shop" class="view" hidden>
+    <div class="panel" style="gap:6px"><h2>島のショップ</h2><p class="note" id="slotNote"></p></div>
+    <div class="shop" id="shop"></div>
+  </section>
+
+  <section id="view-log" class="view" hidden>
+    <div class="stats" id="stats"></div>
+    <div class="panel chart"><h2>この7日間（分）</h2><div id="chart"></div></div>
+    <div class="panel"><h2>バッジ</h2><div class="badges" id="badges"></div></div>
+    <div class="panel"><h2>最近のチャレンジ</h2><ul class="hist" id="hist"></ul></div>
+    <p class="note">連続記録がとぎれても、合計の記録とコインは消えません。また今日から挑戦しよう。</p>
+    <button class="ghost" id="resetBtn" style="align-self:center;font-size:13px">記録をすべてリセット</button>
+  </section>
+</div>
+
+<nav class="tabs" aria-label="メニュー"><div role="tablist">
+  <button class="tab" role="tab" data-view="island" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18c3-2 6-2 9 0s6 2 9 0"/><path d="M12 15V6"/><path d="M12 6c-2-2-5-2-6 0M12 6c2-2 5-2 6 0"/></svg>しま</button>
+  <button class="tab" role="tab" data-view="shop" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9h16l-1.5 11h-13z"/><path d="M8 9a4 4 0 0 1 8 0"/></svg>ショップ</button>
+  <button class="tab" role="tab" data-view="log" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V12M12 20V5M19 20v-9"/></svg>きろく</button>
+</div></nav>
+
+<div class="focus" id="focus" hidden>
+  <div class="kind" id="fKind">スマホ休憩中</div>
+  <div class="ring">
+    <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="9"/><circle id="ringArc" cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+    <div class="center">
+      <svg viewBox="0 0 60 50" width="64" height="54" aria-hidden="true"><ellipse cx="30" cy="46" rx="20" ry="4" fill="var(--sand2)"/><g id="sprout" class="sprout-grow"><path d="M30 46V24" stroke="var(--leaf)" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="22" cy="26" rx="8" ry="4" transform="rotate(-25 22 26)" fill="var(--grass)"/><ellipse cx="38" cy="22" rx="8" ry="4" transform="rotate(25 38 22)" fill="var(--leaf)"/></g></svg>
+      <div class="time" id="fTime">15:00</div>
+    </div>
+  </div>
+  <div class="mtag" id="fMission" hidden></div>
+  <p class="msg" id="fMsg">スマホを置いて、画面を閉じてOK。時間になったら戻ってきてね。</p>
+  <button class="ghost" id="giveUpBtn">やめる</button>
+</div>
+
+<div class="modal" id="modal" hidden><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+"use strict";
+const KEY="sumaho-kyukeibu-v1";
+const LEVELS=[0,60,180,420,900];           // 合計休憩分でレベルアップ
+const DURS=[{m:15,c:15},{m:30,c:35},{m:60,c:80}];
+const TRIAL={m:1,c:1};
+const MISSION_BONUS=10, SLEEP_COINS=40;
+const CATALOG=[
+  {id:"grass",name:"草むら",price:10},
+  {id:"rock",name:"いわ",price:15},
+  {id:"flower",name:"お花",price:20},
+  {id:"palm",name:"ヤシの木",price:40},
+  {id:"tree",name:"まるい木",price:50},
+  {id:"tent",name:"テント",price:80},
+  {id:"field",name:"はたけ",price:90},
+  {id:"boat",name:"ボート",price:120,max:1,sea:true},
+  {id:"house",name:"おうち",price:150},
+  {id:"lighthouse",name:"とうだい",price:260,max:1}
+];
+const MISSIONS=[
+  {g:"勉強",items:[["eitango","英単語を20個おぼえる"],["sugaku","数学の問題を5問とく"],["kanji","漢字を10個練習する"]]},
+  {g:"運動",items:[["walk","10分さんぽする"],["stretch","ストレッチする"],["jump","なわとび100回"]]},
+  {g:"読書・家族",items:[["book","本を10ページ読む"],["talk","家族と話す"],["help","家のお手伝い"]]},
+  {g:"ほっとする",items:[["bath","ゆっくりお風呂"],["draw","絵をかく"],["relax","ぼーっとする"]]}
+];
+const missionName=id=>{for(const g of MISSIONS)for(const[k,v]of g.items)if(k===id)return v;return null};
+const PET_STAGES=[{at:0,n:"たまご"},{at:1,n:"ひよこ"},{at:3,n:"こども"},{at:7,n:"おとな"}];
+
+function fresh(){return{v:1,coins:30,totalMin:0,sessions:[],items:[{id:"palm",slot:0}],pet:{name:"ペンペン",xp:0},sleeps:[],active:null,wake:"07:00"}}
+let mem=null;
+function load(){try{const s=localStorage.getItem(KEY);if(s)return Object.assign(fresh(),JSON.parse(s))}catch(e){} return mem||fresh()}
+function save(){mem=S;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+let S=load();
+
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,"0");
+const dayKey=ts=>{const d=new Date(ts);return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())};
+function level(){let lv=1;LEVELS.forEach((t,i)=>{if(S.totalMin>=t)lv=i+1});return lv}
+function streak(){
+  const days=new Set(S.sessions.map(s=>s.d));
+  const d=new Date();d.setHours(12,0,0,0);
+  if(!days.has(dayKey(d)))d.setDate(d.getDate()-1);
+  let n=0;while(days.has(dayKey(d))){n++;d.setDate(d.getDate()-1)}
+  return n;
+}
+function bestStreak(){
+  const days=[...new Set(S.sessions.map(s=>s.d))].sort();let best=0,run=0,prev=null;
+  for(const k of days){const t=new Date(k+"T12:00:00").getTime();run=(prev&&Math.round((t-prev)/864e5)===1)?run+1:1;best=Math.max(best,run);prev=t}
+  return best;
+}
+function petStage(){let st=PET_STAGES[0];for(const p of PET_STAGES)if(S.pet.xp>=p.at)st=p;return st}
+
+/* ---------- island drawing ---------- */
+const CX=200,CY=150,MAXRX=172;
+const rxOf=lv=>92+lv*16;
+const SLOTS=Array.from({length:30},(_,i)=>{const r=Math.sqrt((i+.5)/30)*.8,a=i*2.39996;return{r,x:CX+r*Math.cos(a)*MAXRX,y:CY-6+r*Math.sin(a)*MAXRX*.38}});
+function slotOk(i,lv){return SLOTS[i].r*MAXRX<=rxOf(lv)*.74}
+function capacity(lv){return SLOTS.filter((_,i)=>slotOk(i,lv)).length}
+function freeSlot(){const used=new Set(S.items.map(t=>t.slot));const lv=level();for(let i=0;i<SLOTS.length;i++)if(!used.has(i)&&slotOk(i,lv))return i;return -1}
+
+const PETALS=["#FF8FB1","#FFD166","#FFFFFF","#B79CFF"];
+const D={
+  grass:(x,y)=>`<path d="M${x-8} ${y}l3-11 3 11M${x-2} ${y}l3-14 3 14M${x+4} ${y}l3-9 3 9" fill="var(--grass2)"/>`,
+  rock:(x,y)=>`<ellipse cx="${x}" cy="${y-5}" rx="11" ry="7" fill="var(--rock)"/><ellipse cx="${x+8}" cy="${y-2}" rx="6" ry="4" fill="var(--rock)" opacity=".8"/><ellipse cx="${x-3}" cy="${y-8}" rx="4" ry="2" fill="var(--foam)" opacity=".35"/>`,
+  flower:(x,y,k)=>{const c=PETALS[k%PETALS.length];let p="";for(let i=0;i<5;i++){const a=i*1.2566;p+=`<circle cx="${(x+Math.cos(a)*3.6).toFixed(1)}" cy="${(y-13+Math.sin(a)*3.6).toFixed(1)}" r="2.8" fill="${c}"/>`}return`<path d="M${x} ${y}v-12" stroke="var(--leaf)" stroke-width="2"/><ellipse cx="${x+3}" cy="${y-5}" rx="3.5" ry="1.6" fill="var(--leaf)"/>${p}<circle cx="${x}" cy="${y-13}" r="2" fill="var(--coin)"/>`},
+  palm:(x,y)=>{let l="";[-165,-120,-60,-15].forEach(a=>{const r=a*Math.PI/180;l+=`<ellipse cx="${(x+4+Math.cos(r)*13).toFixed(1)}" cy="${(y-46+Math.sin(r)*7+5).toFixed(1)}" rx="15" ry="5" transform="rotate(${a<-90?a+180:a} ${(x+4+Math.cos(r)*13).toFixed(1)} ${(y-46+Math.sin(r)*7+5).toFixed(1)})" fill="${a%2?"var(--leaf)":"var(--leaf2)"}"/>`});return`<path d="M${x} ${y}q-7-22 4-46" stroke="var(--wood)" stroke-width="5" fill="none" stroke-linecap="round"/>${l}<circle cx="${x+2}" cy="${y-42}" r="3" fill="var(--wood)"/><circle cx="${x+7}" cy="${y-43}" r="3" fill="var(--wood)"/>`},
+  tree:(x,y)=>`<rect x="${x-3}" y="${y-16}" width="6" height="16" rx="2" fill="var(--wood)"/><circle cx="${x-9}" cy="${y-20}" r="9" fill="var(--leaf2)"/><circle cx="${x+9}" cy="${y-20}" r="9" fill="var(--leaf2)"/><circle cx="${x}" cy="${y-29}" r="13" fill="var(--leaf)"/>`,
+  tent:(x,y)=>`<polygon points="${x-16},${y} ${x},${y-24} ${x+16},${y}" fill="var(--tent)"/><polygon points="${x-5},${y} ${x},${y-12} ${x+5},${y}" fill="var(--dark)" opacity=".7"/><path d="M${x} ${y-24}v-5" stroke="var(--wood)" stroke-width="2"/>`,
+  field:(x,y)=>{let r="";for(let i=0;i<3;i++){r+=`<rect x="${x-17}" y="${y-14+i*5}" width="34" height="3.5" rx="1.7" fill="var(--wood)" opacity=".75"/>`;for(let j=0;j<4;j++)r+=`<circle cx="${x-12+j*8}" cy="${y-15+i*5}" r="1.8" fill="var(--grass)"/>`}return r},
+  house:(x,y)=>`<rect x="${x-15}" y="${y-19}" width="30" height="19" fill="var(--wall)"/><polygon points="${x-19},${y-18} ${x},${y-34} ${x+19},${y-18}" fill="var(--roof)"/><rect x="${x-4}" y="${y-11}" width="8" height="11" rx="1" fill="var(--wood)"/><rect x="${x+7}" y="${y-15}" width="6" height="6" fill="var(--window)"/><rect x="${x-13}" y="${y-15}" width="6" height="6" fill="var(--window)"/>`,
+  lighthouse:(x,y)=>`<polygon points="${x-10},${y} ${x-6},${y-52} ${x+6},${y-52} ${x+10},${y}" fill="var(--wall)"/><polygon points="${x-9},${y-12} ${x-8.2},${y-20} ${x+8.2},${y-20} ${x+9},${y-12}" fill="var(--roof)"/><polygon points="${x-7.6},${y-30} ${x-7},${y-38} ${x+7},${y-38} ${x+7.6},${y-30}" fill="var(--roof)"/><rect x="${x-6}" y="${y-61}" width="12" height="9" fill="var(--coin)"/><polygon points="${x-8},${y-61} ${x},${y-69} ${x+8},${y-61}" fill="var(--roof)"/>`,
+  boat:(x,y)=>`<path d="M${x-20} ${y-6}h40l-7 9h-26z" fill="var(--wood)"/><path d="M${x} ${y-6}v-26" stroke="var(--wood)" stroke-width="2"/><polygon points="${x+1},${y-31} ${x+1},${y-9} ${x+16},${y-9}" fill="var(--wall)"/>`
+};
+function drawPet(x,y,xp,s){
+  s=s||1;const st=petStage().n;const g=(inner)=>`<g transform="translate(${x} ${y}) scale(${s})">${inner}</g>`;
+  if(st==="たまご")return g(`<ellipse cx="0" cy="-10" rx="8" ry="10" fill="var(--wall)"/><circle cx="-3" cy="-13" r="1.6" fill="var(--sea2)"/><circle cx="3" cy="-7" r="2" fill="var(--sea2)"/>`);
+  const big=st==="おとな"?1.35:st==="こども"?1.15:1;
+  const body=`<ellipse cx="0" cy="${-12*big}" rx="${10*big}" ry="${12*big}" fill="var(--dark)"/><ellipse cx="0" cy="${-10*big}" rx="${6.5*big}" ry="${9*big}" fill="var(--wall)"/><circle cx="${-3*big}" cy="${-17*big}" r="1.5" fill="var(--dark)"/><circle cx="${3*big}" cy="${-17*big}" r="1.5" fill="var(--dark)"/><polygon points="${-2.5*big},${-14*big} ${2.5*big},${-14*big} 0,${-11*big}" fill="var(--coin)"/><ellipse cx="${-4*big}" cy="0" rx="3.5" ry="1.6" fill="var(--coin)"/><ellipse cx="${4*big}" cy="0" rx="3.5" ry="1.6" fill="var(--coin)"/>`;
+  const scarf=st==="おとな"?`<rect x="${-8*big}" y="${-22*big}" width="${16*big}" height="3.5" rx="1.7" fill="var(--roof)"/><rect x="${4*big}" y="${-21*big}" width="3.5" height="9" rx="1.5" fill="var(--roof)"/>`:"";
+  return g(body+scarf);
+}
+function renderIsland(){
+  const lv=level(),rx=rxOf(lv),ry=rx*.42;
+  let o=`<g class="wave" opacity=".55">`;
+  [[40,40],[300,30],[70,235],[330,245],[20,140],[370,120]].forEach(([x,y])=>{o+=`<path d="M${x} ${y}q6-5 12 0t12 0" stroke="var(--foam)" stroke-width="2" fill="none" stroke-linecap="round"/>`});
+  o+=`</g>`;
+  o+=`<ellipse cx="${CX}" cy="${CY+8}" rx="${rx+14}" ry="${ry+10}" fill="var(--foam)" opacity=".35"/>`;
+  o+=`<ellipse cx="${CX}" cy="${CY+4}" rx="${rx}" ry="${ry}" fill="var(--sand2)"/>`;
+  o+=`<ellipse cx="${CX}" cy="${CY}" rx="${rx}" ry="${ry}" fill="var(--sand)"/>`;
+  o+=`<ellipse cx="${CX}" cy="${CY-6}" rx="${rx*.84}" ry="${ry*.72}" fill="var(--grass)"/>`;
+  const parts=[];let k=0;
+  S.items.forEach(t=>{const f=D[t.id];if(!f)return;
+    if(t.id==="boat"){parts.push({y:999,s:f(330,232)});return}
+    const p=SLOTS[t.slot];if(!p)return;parts.push({y:p.y,s:f(Math.round(p.x),Math.round(p.y),k++)});});
+  parts.push({y:CY+ry*.62,s:drawPet(CX+rx*.5,CY+ry*.66)});
+  parts.sort((a,b)=>a.y-b.y).forEach(p=>o+=p.s);
+  $("island").innerHTML=o;
+  $("lvNum").textContent=lv;
+  const next=LEVELS[lv];
+  if(next){const prev=LEVELS[lv-1];$("lvBar").style.width=Math.min(100,(S.totalMin-prev)/(next-prev)*100)+"%";$("lvText").textContent=`あと${next-S.totalMin}分の休憩で島が広がる（合計 ${S.totalMin}分）`}
+  else{$("lvBar").style.width="100%";$("lvText").textContent=`島は最大サイズ！ 合計 ${S.totalMin}分`}
+  $("petPreview").innerHTML=`<ellipse cx="30" cy="54" rx="18" ry="4" fill="var(--sand2)"/>`+drawPet(30,54,0,1.2);
+  $("petName").textContent=S.pet.name;
+  const st=petStage(),nx=PET_STAGES.find(p=>p.at>S.pet.xp);
+  $("petStage").textContent=`いまは「${st.n}」。成功 ${S.pet.xp}回`+(nx?`／あと${nx.at-S.pet.xp}回で「${nx.n}」に。`:"／もう立派なおとな！");
+}
+
+/* ---------- home controls ---------- */
+let pick=DURS[0],trial=false,mission=null;
+function renderDur(){
+  $("durChips").innerHTML=DURS.map((d,i)=>`<button class="chip" data-i="${i}" aria-pressed="${!trial&&pick===d}"><b>${d.m}</b><span>分 ／ +${d.c}コイン</span></button>`).join("");
+  $("trialBtn").setAttribute("aria-pressed",trial);
+}
+$("durChips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;pick=DURS[+b.dataset.i];trial=false;renderDur()});
+$("trialBtn").addEventListener("click",()=>{trial=!trial;renderDur()});
+$("missionBtn").addEventListener("click",openMissions);
+function openMissions(){
+  let h=`<h3>休憩中にやること</h3><p class="note">終わったら「できた！」でボーナス +${MISSION_BONUS}コイン。</p>`;
+  h+=`<div class="mlist"><button class="mchip" data-m="" aria-pressed="${!mission}">ミッションなし</button></div>`;
+  MISSIONS.forEach(g=>{h+=`<div class="mgroup"><span class="label">${g.g}</span><div class="mlist">${g.items.map(([k,v])=>`<button class="mchip" data-m="${k}" aria-pressed="${mission===k}">${v}</button>`).join("")}</div></div>`});
+  openSheet(h);
+  $("sheet").querySelectorAll(".mchip").forEach(b=>b.addEventListener("click",()=>{mission=b.dataset.m||null;$("missionText").textContent=mission?missionName(mission):"ミッションなし";closeSheet()}));
+}
+
+$("startBtn").addEventListener("click",()=>{
+  const d=trial?TRIAL:pick,now=Date.now();
+  S.active={type:"focus",start:now,end:now+d.m*60000,min:d.m,coins:d.c,mission:mission};
+  save();unlockAudio();showFocus();
+});
+$("wakeInput").addEventListener("change",e=>{S.wake=e.target.value||"07:00";save()});
+$("sleepBtn").addEventListener("click",()=>{
+  const today=dayKey(Date.now());
+  const [h,m]=(S.wake||"07:00").split(":").map(Number);
+  const now=new Date(),end=new Date();end.setHours(h,m,0,0);
+  if(end-now<60*60000)end.setDate(end.getDate()+1);
+  S.active={type:"sleep",start:now.getTime(),end:end.getTime(),min:0,coins:SLEEP_COINS,mission:null};
+  save();unlockAudio();showFocus();
+});
+
+/* ---------- focus mode ---------- */
+let tick=null;
+function showFocus(){
+  const a=S.active;if(!a)return;
+  $("focus").hidden=false;
+  const sleep=a.type==="sleep";
+  $("fKind").textContent=sleep?"おやすみチャレンジ中":"スマホ休憩中";
+  $("fMsg").textContent=sleep?`スマホを置いて、おやすみなさい。${new Date(a.end).getHours()}:${pad(new Date(a.end).getMinutes())} 以降に開くと成功です。`:"スマホを置いて、画面を閉じてOK。時間になったら戻ってきてね。";
+  $("giveUpBtn").textContent=sleep?"おきた":"やめる";
+  const mt=$("fMission");if(a.mission){mt.hidden=false;mt.textContent="ミッション："+missionName(a.mission)}else mt.hidden=true;
+  clearInterval(tick);update();tick=setInterval(update,500);
+}
+function update(){
+  const a=S.active;if(!a){clearInterval(tick);return}
+  const total=a.end-a.start,left=Math.max(0,a.end-Date.now()),p=1-left/total;
+  $("ringArc").setAttribute("stroke-dashoffset",(326.7*(1-p)).toFixed(1));
+  $("sprout").style.transform=`scale(${(.35+.65*p).toFixed(3)})`;
+  const sec=Math.ceil(left/1000);
+  $("fTime").textContent=sec>=3600?`${Math.floor(sec/3600)}:${pad(Math.floor(sec%3600/60))}:${pad(sec%60)}`:`${pad(Math.floor(sec/60))}:${pad(sec%60)}`;
+  if(left<=0)complete();
+}
+function complete(){
+  const a=S.active;if(!a)return;clearInterval(tick);S.active=null;
+  const now=Date.now();
+  if(a.type==="sleep"){
+    const d=dayKey(now),already=S.sleeps.includes(d);
+    if(!already){S.sleeps.push(d);S.pet.xp++;S.coins+=a.coins}
+    save();$("focus").hidden=true;chime();renderAll();bumpCoins();
+    openSheet(`<h3>おはよう！おやすみチャレンジ成功</h3>${already?`<p>今日の分はもう記録済みです。</p>`:`<div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div><p>${S.pet.name}が少し育ちました（成功 ${S.pet.xp}回）。</p>`}<button class="primary" data-close>島を見る</button>`);
+    return;
+  }
+  const sess={d:dayKey(now),t:now,min:a.min,mission:a.mission,mDone:false};
+  S.sessions.push(sess);S.totalMin+=a.min;S.coins+=a.coins;
+  const lvBefore=LEVELS.filter(t=>S.totalMin-a.min>=t).length,lvAfter=level();
+  save();$("focus").hidden=true;chime();renderAll();bumpCoins();
+  let h=`<h3>${a.min}分のスマホ休憩、達成！</h3><div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div>`;
+  if(lvAfter>lvBefore)h+=`<p><b>島がレベル${lvAfter}に広がった！</b> 置ける場所が増えました。</p>`;
+  if(a.mission){h+=`<p>ミッション「${missionName(a.mission)}」はできた？</p><div class="btnrow"><button class="primary" id="mYes">できた！ +${MISSION_BONUS}</button><button class="ghost" data-close>今回はパス</button></div>`}
+  else h+=`<button class="primary" data-close>島を見る</button>`;
+  openSheet(h);
+  const y=$("mYes");if(y)y.addEventListener("click",()=>{sess.mDone=true;S.coins+=MISSION_BONUS;save();renderAll();bumpCoins();closeSheet();toast("ミッション達成！ +"+MISSION_BONUS+"コイン")});
+}
+$("giveUpBtn").addEventListener("click",()=>{
+  const a=S.active;if(!a)return;
+  const sleep=a.type==="sleep";
+  openSheet(`<h3>${sleep?"もう起きる？":"チャレンジをやめる？"}</h3><p>${sleep?"起きる時間の前なので、今回は記録されません。":"今回のコインはもらえませんが、島はそのまま。"}また次にチャレンジしよう。</p><div class="btnrow"><button class="ghost" id="quitYes">${sleep?"起きる":"やめる"}</button><button class="primary" data-close>つづける</button></div>`);
+  $("quitYes").addEventListener("click",()=>{S.active=null;save();clearInterval(tick);$("focus").hidden=true;closeSheet();toast("また挑戦しよう！")});
+});
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.active)update()});
+
+/* ---------- shop ---------- */
+function previewSvg(id){
+  const f=D[id];const y=id==="boat"?66:68;
+  const bg=id==="boat"?`<rect width="120" height="80" fill="var(--sea1)"/>`:`<ellipse cx="60" cy="70" rx="40" ry="8" fill="var(--grass)"/>`;
+  return`<svg viewBox="0 0 120 80" aria-hidden="true">${bg}<g transform="translate(60 ${y}) scale(1.25) translate(-60 -${y})">${f(60,y,0)}</g></svg>`;
+}
+function renderShop(){
+  const lv=level(),cap=capacity(lv),used=S.items.filter(t=>t.id!=="boat").length;
+  $("slotNote").textContent=`置ける場所 ${used}/${cap}`+(lv<5?"（島レベルが上がると増えます）":"");
+  $("shop").innerHTML=CATALOG.map(it=>{
+    const own=S.items.filter(t=>t.id===it.id).length;
+    const maxed=it.max&&own>=it.max, noSlot=!it.sea&&freeSlot()<0, poor=S.coins<it.price;
+    const label=maxed?"もってる":noSlot?"場所がない":`<span class="coin-ico">¢</span>${it.price}`;
+    return`<div class="item">${previewSvg(it.id)}<div class="name">${it.name}<small>${own?own+"こ":""}</small></div><button class="buy" data-id="${it.id}" ${maxed||noSlot||poor?"disabled":""}>${label}</button></div>`;
+  }).join("");
+}
+$("shop").addEventListener("click",e=>{
+  const b=e.target.closest(".buy");if(!b||b.disabled)return;
+  const it=CATALOG.find(c=>c.id===b.dataset.id);if(S.coins<it.price)return;
+  const slot=it.sea?-1:freeSlot();if(!it.sea&&slot<0)return;
+  S.coins-=it.price;S.items.push({id:it.id,slot});save();renderAll();bumpCoins();toast(it.name+"を島に置きました");
+});
+
+/* ---------- records ---------- */
+const BADGES=[
+  {n:"はじめの一歩",m:"1",ok:()=>S.sessions.length>=1},
+  {n:"3日つづいた",m:"3",ok:()=>bestStreak()>=3},
+  {n:"7日つづいた",m:"7",ok:()=>bestStreak()>=7},
+  {n:"60分チャレンジ成功",m:"60",ok:()=>S.sessions.some(s=>s.min>=60)},
+  {n:"合計5時間",m:"5h",ok:()=>S.totalMin>=300},
+  {n:"ミッション10回",m:"10",ok:()=>S.sessions.filter(s=>s.mDone).length>=10},
+  {n:"おやすみ3回",m:"夜",ok:()=>S.pet.xp>=3},
+  {n:"島レベル3",m:"島",ok:()=>level()>=3},
+  {n:"おうちを建てた",m:"家",ok:()=>S.items.some(t=>t.id==="house")}
+];
+function renderLog(){
+  const st=streak();
+  $("stats").innerHTML=[[st,"連続日数"],[S.totalMin,"合計（分）"],[S.sessions.length,"成功回数"]].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
+  // 7-day chart
+  const days=[];const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-6);
+  for(let i=0;i<7;i++){const k=dayKey(d);days.push({k,w:"日月火水木金土"[d.getDay()],m:S.sessions.filter(s=>s.d===k).reduce((a,s)=>a+s.min,0)});d.setDate(d.getDate()+1)}
+  const mx=Math.max(...days.map(x=>x.m));const top=mx<=30?30:mx<=60?60:mx<=120?120:Math.ceil(mx/60)*60;
+  const W=320,H=150,L=30,B=22,T=12,bw=(W-L-10)/7;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="7日間の休憩時間">`;
+  [0,.5,1].forEach(f=>{const y=H-B-(H-B-T)*f;s+=`<line x1="${L}" x2="${W-6}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${L-6}" y="${y+4}" text-anchor="end" font-size="10" fill="var(--muted)">${Math.round(top*f)}</text>`});
+  days.forEach((x,i)=>{const h=(H-B-T)*x.m/top,bx=L+i*bw+bw*.2,today=i===6;
+    if(x.m>0)s+=`<rect x="${bx.toFixed(1)}" y="${(H-B-h).toFixed(1)}" width="${(bw*.6).toFixed(1)}" height="${h.toFixed(1)}" rx="4" fill="var(--accent)" opacity="${today?1:.65}"/>`;
+    if(x.m>0)s+=`<text x="${(bx+bw*.3).toFixed(1)}" y="${(H-B-h-4).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="var(--ink)">${x.m}</text>`;
+    s+=`<text x="${(bx+bw*.3).toFixed(1)}" y="${H-6}" text-anchor="middle" font-size="11" font-weight="${today?800:500}" fill="${today?"var(--accent)":"var(--muted)"}">${today?"今日":x.w}</text>`});
+  $("chart").innerHTML=s+`</svg>`;
+  $("badges").innerHTML=BADGES.map(b=>{const g=b.ok();return`<div class="badge ${g?"got":""}"><span class="medal">${b.m}</span>${b.n}</div>`}).join("");
+  const rec=S.sessions.slice(-6).reverse();
+  $("hist").innerHTML=rec.length?rec.map(r=>{const t=new Date(r.t);return`<li><span>${r.min}分の休憩${r.mission?`・${missionName(r.mission)}${r.mDone?"（できた）":""}`:""}</span><span>${t.getMonth()+1}/${t.getDate()} ${t.getHours()}:${pad(t.getMinutes())}</span></li>`}).join(""):`<li><span>まだ記録がありません。まずは15分から挑戦してみよう。</span></li>`;
+}
+$("resetBtn").addEventListener("click",()=>{
+  openSheet(`<h3>記録をリセットしますか？</h3><p>コイン・島・ペット・記録がすべて最初に戻ります。元には戻せません。</p><div class="btnrow"><button class="ghost" id="rYes">リセットする</button><button class="primary" data-close>やめておく</button></div>`);
+  $("rYes").addEventListener("click",()=>{S=fresh();save();closeSheet();renderAll();toast("リセットしました")});
+});
+
+/* ---------- ui helpers ---------- */
+function openSheet(h){$("sheet").innerHTML=h;$("modal").hidden=false;$("sheet").querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",closeSheet));const f=$("sheet").querySelector("button");if(f)f.focus()}
+function closeSheet(){$("modal").hidden=true}
+$("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeSheet()});
+let tt;function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2200)}
+function bumpCoins(){const c=$("coins");c.classList.remove("bump");void c.offsetWidth;c.classList.add("bump")}
+let actx=null;
+function unlockAudio(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume()}catch(e){}}
+function chime(){try{if(navigator.vibrate)navigator.vibrate([120,60,120])}catch(e){}
+  try{if(!actx)return;[659,784,1047].forEach((f,i)=>{const o=actx.createOscillator(),g=actx.createGain();o.type="sine";o.frequency.value=f;o.connect(g);g.connect(actx.destination);const t=actx.currentTime+i*.14;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.5);o.start(t);o.stop(t+.55)})}catch(e){}}
+
+document.querySelector(".tabs").addEventListener("click",e=>{
+  const b=e.target.closest(".tab");if(!b)return;const v=b.dataset.view;
+  document.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected",t===b));
+  document.querySelectorAll(".view").forEach(s=>{s.hidden=s.id!=="view-"+v});
+  window.scrollTo(0,0);renderAll();
+});
+
+function renderAll(){$("coinNum").textContent=S.coins;$("wakeInput").value=S.wake||"07:00";renderIsland();renderDur();renderShop();renderLog()}
+renderAll();
+if(S.active)showFocus();
+})();
+</script>

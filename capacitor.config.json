@@ -1,0 +1,11 @@
+{
+  "appId": "com.papamilktea.sumahokyukeibu",
+  "appName": "スマホ休憩部",
+  "webDir": "www",
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_notify",
+      "iconColor": "#0B8A8F"
+    }
+  }
+}
