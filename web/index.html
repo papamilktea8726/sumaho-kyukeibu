@@ -5,13 +5,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;500;700;800&display=swap">
 <style>
-/* Layout: one phone-width column — island stage on top, controls below, tab bar fixed at the bottom; focus mode takes over the whole screen. */
+/* Layout: one phone-width column — mansion stage on top, controls below, tab bar fixed at the bottom; focus mode takes over the whole screen. */
 :root{
   --bg:#E6F4F5; --surface:#FFFFFF; --surface2:#F2FAFA; --ink:#12343B; --muted:#557A80; --line:#CBE3E5;
-  --accent:#0B8A8F; --accent-ink:#FFFFFF; --accent-soft:#D3EFEF; --coin:#E9A91E; --coin-soft:#FFF1CC;
-  --sea1:#8ED8DE; --sea2:#46AFBF; --foam:#FFFFFF; --sand:#F1DCA0; --sand2:#E2C47F;
-  --grass:#86C86F; --grass2:#62AC57; --leaf:#3F9A50; --leaf2:#2F8243; --wood:#9A6B43;
-  --roof:#E0644F; --wall:#FFF6E6; --tent:#F2A541; --rock:#A9B6B8; --window:#BDE7F0; --dark:#24323A;
+  --accent:#0B8A8F; --accent-ink:#FFFFFF; --accent-soft:#D3EFEF; --coin:#E9A91E; --coin-soft:#FFF1CC; --gold2:#F6D27A;
+  --sky1:#8FD0EE; --sky2:#DDF3FB; --sun:#FFD25A; --cloud:#FFFFFF; --star:rgba(255,255,255,0);
+  --grass:#8CCB6E; --grass2:#7FC062; --hedge:#4E9A4F; --leaf:#3F9A50; --leaf2:#2F8243; --wood:#9A6B43;
+  --path:#ECE3D1; --drive:#BFC4C7; --wall:#FFF8EC; --wall2:#EFE3CD; --trim:#D3BE98; --roof:#5F7290;
+  --window:#BDE7F0; --water:#4FC3E0; --water2:#B4ECF6; --metal:#D7DEE2; --rock:#B6BEC2;
+  --red:#E5322D; --pink:#FF8FB1; --heli:#2B3D63; --crystal:#FFFFFF; --dog:#D29455; --dog2:#8E5A2B; --dark:#24323A;
   --good:#2E9E5B;
   --f-display:"Dela Gothic One","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --f-body:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
@@ -19,18 +21,22 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0A1C24; --surface:#112C36; --surface2:#0E2530; --ink:#E3F2F3; --muted:#8DB0B5; --line:#1F4450;
-  --accent:#3FC8CB; --accent-ink:#04222A; --accent-soft:#143F47; --coin:#F5C84A; --coin-soft:#3A3318;
-  --sea1:#18506060; --sea2:#0D3644; --foam:#7FB9C4; --sand:#C8B27E; --sand2:#A98F5C;
-  --grass:#4F914A; --grass2:#3D7A3B; --leaf:#2F7D44; --leaf2:#246535; --wood:#7E5737;
-  --roof:#C2513F; --wall:#E8DCC6; --tent:#D88E34; --rock:#7D8A8D; --window:#F6D66B; --dark:#0A141A;
+  --accent:#3FC8CB; --accent-ink:#04222A; --accent-soft:#143F47; --coin:#F5C84A; --coin-soft:#3A3318; --gold2:#E8C25A;
+  --sky1:#0B1630; --sky2:#26375E; --sun:#EEEBD6; --cloud:#3A4C72; --star:#FFF6CF;
+  --grass:#2F6B3A; --grass2:#2A6236; --hedge:#234F2D; --leaf:#2F7D44; --leaf2:#246535; --wood:#7E5737;
+  --path:#8A8370; --drive:#4A5157; --wall:#E8DFCC; --wall2:#CFC4AE; --trim:#B9A584; --roof:#46546A;
+  --window:#F6D66B; --water:#2A8FB0; --water2:#5FC0DA; --metal:#9AA6AD; --rock:#7D8A8D;
+  --red:#D2392F; --pink:#E07A9A; --heli:#DDE6F0; --crystal:#FFF2C0; --dog:#B67A40; --dog2:#7A4D25; --dark:#0A141A;
   --good:#4CC67F; color-scheme:dark;
 }}
 :root[data-theme="dark"]{
   --bg:#0A1C24; --surface:#112C36; --surface2:#0E2530; --ink:#E3F2F3; --muted:#8DB0B5; --line:#1F4450;
-  --accent:#3FC8CB; --accent-ink:#04222A; --accent-soft:#143F47; --coin:#F5C84A; --coin-soft:#3A3318;
-  --sea1:#18506060; --sea2:#0D3644; --foam:#7FB9C4; --sand:#C8B27E; --sand2:#A98F5C;
-  --grass:#4F914A; --grass2:#3D7A3B; --leaf:#2F7D44; --leaf2:#246535; --wood:#7E5737;
-  --roof:#C2513F; --wall:#E8DCC6; --tent:#D88E34; --rock:#7D8A8D; --window:#F6D66B; --dark:#0A141A;
+  --accent:#3FC8CB; --accent-ink:#04222A; --accent-soft:#143F47; --coin:#F5C84A; --coin-soft:#3A3318; --gold2:#E8C25A;
+  --sky1:#0B1630; --sky2:#26375E; --sun:#EEEBD6; --cloud:#3A4C72; --star:#FFF6CF;
+  --grass:#2F6B3A; --grass2:#2A6236; --hedge:#234F2D; --leaf:#2F7D44; --leaf2:#246535; --wood:#7E5737;
+  --path:#8A8370; --drive:#4A5157; --wall:#E8DFCC; --wall2:#CFC4AE; --trim:#B9A584; --roof:#46546A;
+  --window:#F6D66B; --water:#2A8FB0; --water2:#5FC0DA; --metal:#9AA6AD; --rock:#7D8A8D;
+  --red:#D2392F; --pink:#E07A9A; --heli:#DDE6F0; --crystal:#FFF2C0; --dog:#B67A40; --dog2:#7A4D25; --dark:#0A141A;
   --good:#4CC67F; color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -48,12 +54,12 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .coins.bump{animation:bump .5s}
 @keyframes bump{40%{transform:scale(1.18)}}
 
-.stage{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,var(--sea1),var(--sea2));aspect-ratio:400/270;max-width:100%}
+.stage{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,var(--sky1),var(--sky2) 62%);aspect-ratio:400/270;max-width:100%}
 .stage svg{display:block;width:100%;height:100%}
-.lv{position:absolute;left:12px;top:10px;background:var(--surface);border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700;display:flex;gap:8px;align-items:center}
+.lv{position:absolute;left:12px;top:10px;background:var(--surface);border-radius:999px;padding:3px 12px;font-size:12.5px;font-weight:700;display:flex;gap:6px;align-items:baseline}
 .lv b{font-family:var(--f-display);font-weight:400}
-.wave{animation:drift 6s ease-in-out infinite alternate}
-@keyframes drift{to{transform:translateX(10px)}}
+.wave{animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(14px)}}
 @media (prefers-reduced-motion:reduce){.wave,.coins.bump,.sprout-grow{animation:none!important}}
 
 .progress{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
@@ -87,10 +93,11 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .shop{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .item{background:var(--surface);border-radius:var(--r);padding:10px 10px 12px;display:flex;flex-direction:column;gap:6px;align-items:stretch}
 .item svg{width:100%;height:76px;background:var(--surface2);border-radius:12px}
-.item .name{font-weight:800;display:flex;justify-content:space-between;gap:6px;align-items:baseline}
-.item .name small{font-weight:500;color:var(--muted);font-size:11.5px}
-.buy{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:8px;background:var(--accent-soft);font-weight:800;font-variant-numeric:tabular-nums}
-.buy:disabled{opacity:.5;cursor:not-allowed}
+.item .name{font-weight:800;display:flex;justify-content:space-between;gap:6px;align-items:baseline;line-height:1.35;min-height:2.7em}
+.item .name small{font-weight:500;color:var(--muted);font-size:11.5px;white-space:nowrap}
+.item.locked svg{filter:grayscale(.85);opacity:.6}
+.buy{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:8px;background:var(--accent-soft);font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
+.buy:disabled{opacity:.55;cursor:not-allowed}
 .buy .coin-ico{width:16px;height:16px;font-size:9px}
 
 /* records */
@@ -121,6 +128,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .ring{position:relative;width:min(74vw,290px);aspect-ratio:1;max-width:100%}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg)}
 .ring .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.ring .center svg{transform:none}
 .time{font-family:var(--f-display);font-size:clamp(40px,13vw,58px);line-height:1;font-variant-numeric:tabular-nums}
 .focus .msg{max-width:30ch;margin:0;color:var(--muted);font-size:14px}
 .focus .mtag{background:var(--surface);border-radius:999px;padding:6px 14px;font-weight:700;font-size:13.5px}
@@ -138,19 +146,19 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .mlist{display:flex;flex-wrap:wrap;gap:6px}
 .mchip{border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:700;background:var(--surface2)}
 .mchip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
-.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-weight:700;font-size:13.5px;z-index:40;max-width:calc(100% - 32px);text-align:center}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-weight:700;font-size:13.5px;z-index:40;max-width:calc(100% - 32px);text-align:center;border-radius:16px}
 </style>
 
 <div class="app">
   <header class="top">
-    <div class="brand"><b>スマホ休憩部</b><small>スマホを置くと、島が育つ。</small></div>
+    <div class="brand"><b>スマホ休憩部</b><small>スマホを置くと、豪邸が育つ。</small></div>
     <div class="coins" id="coins" aria-label="コイン"><span class="coin-ico">¢</span><span id="coinNum">0</span></div>
   </header>
 
   <section id="view-island" class="view" style="display:flex;flex-direction:column;gap:14px">
     <div class="stage">
-      <div class="lv">島レベル <b id="lvNum">1</b></div>
-      <svg id="island" viewBox="0 0 400 270" role="img" aria-label="あなたの島"></svg>
+      <div class="lv">Lv<b id="lvNum">1</b><span id="lvName"></span></div>
+      <svg id="island" viewBox="0 0 400 270" role="img" aria-label="あなたの家"></svg>
     </div>
     <div class="progress"><div class="bar"><i id="lvBar" style="width:0"></i></div><span id="lvText"></span></div>
 
@@ -167,7 +175,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     <div class="panel">
       <h2>おやすみチャレンジ</h2>
       <div class="sleep">
-        <p>寝る前にスマホを置いて、起きる時間まで触らない。成功するとペット「<span id="petName">ペンペン</span>」が育ちます。</p>
+        <p>寝る前にスマホを置いて、起きる時間まで触らない。成功すると愛犬「<span id="petName">マロン</span>」が育ちます。</p>
         <svg viewBox="0 0 60 60" width="60" height="60" id="petPreview" aria-hidden="true"></svg>
         <div class="row"><label for="wakeInput" class="label">起きる時間</label><input type="time" id="wakeInput" value="07:00"><button class="ghost" id="sleepBtn">おやすみ</button></div>
       </div>
@@ -176,7 +184,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   </section>
 
   <section id="view-shop" class="view" hidden>
-    <div class="panel" style="gap:6px"><h2>島のショップ</h2><p class="note" id="slotNote"></p></div>
+    <div class="panel" style="gap:6px"><h2>豪邸ショップ</h2><p class="note" id="slotNote"></p></div>
     <div class="shop" id="shop"></div>
   </section>
 
@@ -191,7 +199,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 </div>
 
 <nav class="tabs" aria-label="メニュー"><div role="tablist">
-  <button class="tab" role="tab" data-view="island" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 18c3-2 6-2 9 0s6 2 9 0"/><path d="M12 15V6"/><path d="M12 6c-2-2-5-2-6 0M12 6c2-2 5-2 6 0"/></svg>しま</button>
+  <button class="tab" role="tab" data-view="island" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg>おうち</button>
   <button class="tab" role="tab" data-view="shop" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 9h16l-1.5 11h-13z"/><path d="M8 9a4 4 0 0 1 8 0"/></svg>ショップ</button>
   <button class="tab" role="tab" data-view="log" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 20V12M12 20V5M19 20v-9"/></svg>きろく</button>
 </div></nav>
@@ -201,7 +209,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
   <div class="ring">
     <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--line)" stroke-width="9"/><circle id="ringArc" cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="9" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
     <div class="center">
-      <svg viewBox="0 0 60 50" width="64" height="54" aria-hidden="true"><ellipse cx="30" cy="46" rx="20" ry="4" fill="var(--sand2)"/><g id="sprout" class="sprout-grow"><path d="M30 46V24" stroke="var(--leaf)" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="22" cy="26" rx="8" ry="4" transform="rotate(-25 22 26)" fill="var(--grass)"/><ellipse cx="38" cy="22" rx="8" ry="4" transform="rotate(25 38 22)" fill="var(--leaf)"/></g></svg>
+      <svg viewBox="0 0 60 50" width="64" height="54" aria-hidden="true"><ellipse cx="30" cy="46" rx="22" ry="4" fill="var(--grass)"/><g id="sprout" class="sprout-grow"><rect x="14" y="27" width="32" height="19" fill="var(--wall)"/><polygon points="10,28 30,12 50,28" fill="var(--roof)"/><rect x="27" y="35" width="6" height="11" fill="var(--wood)"/><rect x="17" y="31" width="7" height="6" fill="var(--window)"/><rect x="36" y="31" width="7" height="6" fill="var(--window)"/></g></svg>
       <div class="time" id="fTime">15:00</div>
     </div>
   </div>
@@ -217,21 +225,24 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 (function(){
 "use strict";
 const KEY="sumaho-kyukeibu-v1";
-const LEVELS=[0,60,180,420,900];           // 合計休憩分でレベルアップ
+const LEVELS=[0,60,180,420,900];           // 合計休憩分で家がグレードアップ
+const LEVEL_NAMES=["","小さなおうち","2階建ての家","モダンな別荘","豪邸","大豪邸"];
 const DURS=[{m:15,c:15},{m:30,c:35},{m:60,c:80}];
 const TRIAL={m:1,c:1};
 const MISSION_BONUS=10, SLEEP_COINS=40;
 const CATALOG=[
-  {id:"grass",name:"草むら",price:10},
-  {id:"rock",name:"いわ",price:15},
-  {id:"flower",name:"お花",price:20},
-  {id:"palm",name:"ヤシの木",price:40},
-  {id:"tree",name:"まるい木",price:50},
-  {id:"tent",name:"テント",price:80},
-  {id:"field",name:"はたけ",price:90},
-  {id:"boat",name:"ボート",price:120,max:1,sea:true},
-  {id:"house",name:"おうち",price:150},
-  {id:"lighthouse",name:"とうだい",price:260,max:1}
+  {id:"hedge",name:"植木",price:15,lv:1,max:4},
+  {id:"lamp",name:"ガーデンライト",price:20,lv:1,max:4},
+  {id:"palm",name:"ヤシの木",price:30,lv:1,max:3},
+  {id:"fountain",name:"噴水",price:100,lv:2,max:1},
+  {id:"pool",name:"プール",price:120,lv:2,max:1},
+  {id:"flamingo",name:"フラミンゴの浮き輪",price:40,lv:2,max:1,needs:"pool"},
+  {id:"parasol",name:"パラソル＆チェア",price:60,lv:2,max:1,needs:"pool"},
+  {id:"chandelier",name:"シャンデリア",price:150,lv:3,max:1},
+  {id:"lion",name:"金のライオン像",price:180,lv:3,max:1},
+  {id:"car",name:"高級スポーツカー",price:300,lv:3,max:1},
+  {id:"piano",name:"グランドピアノ",price:220,lv:4,max:1},
+  {id:"helicopter",name:"ヘリコプター",price:500,lv:5,max:1}
 ];
 const MISSIONS=[
   {g:"勉強",items:[["eitango","英単語を20個おぼえる"],["sugaku","数学の問題を5問とく"],["kanji","漢字を10個練習する"]]},
@@ -240,17 +251,32 @@ const MISSIONS=[
   {g:"ほっとする",items:[["bath","ゆっくりお風呂"],["draw","絵をかく"],["relax","ぼーっとする"]]}
 ];
 const missionName=id=>{for(const g of MISSIONS)for(const[k,v]of g.items)if(k===id)return v;return null};
-const PET_STAGES=[{at:0,n:"たまご"},{at:1,n:"ひよこ"},{at:3,n:"こども"},{at:7,n:"おとな"}];
+const PET_STAGES=[{at:0,n:"あかちゃん"},{at:1,n:"こいぬ"},{at:3,n:"わんこ"},{at:7,n:"セレブ犬"}];
 
-function fresh(){return{v:1,coins:30,totalMin:0,sessions:[],items:[{id:"palm",slot:0}],pet:{name:"ペンペン",xp:0},sleeps:[],active:null,wake:"07:00"}}
-let mem=null;
-function load(){try{const s=localStorage.getItem(KEY);if(s)return Object.assign(fresh(),JSON.parse(s))}catch(e){} return mem||fresh()}
+function fresh(){return{v:2,coins:30,totalMin:0,sessions:[],items:[],pet:{name:"マロン",xp:0},sleeps:[],active:null,wake:"07:00"}}
+let mem=null, migrated=0;
+function load(){
+  let s=null;
+  try{const t=localStorage.getItem(KEY);if(t)s=JSON.parse(t)}catch(e){}
+  if(!s)return mem||fresh();
+  s=Object.assign(fresh(),s);
+  if((s.v||1)<2){ // 島バージョンのアイテムはコインで返却（ヤシの木は3本まで引き継ぎ）
+    const OLD={grass:10,rock:15,flower:20,palm:40,tree:50,tent:80,field:90,boat:120,house:150,lighthouse:260};
+    let palms=0;const keep=[];
+    (s.items||[]).forEach(t=>{if(t.id==="palm"&&palms<3){palms++;keep.push({id:"palm"})}else if(OLD[t.id])migrated+=OLD[t.id]});
+    s.items=keep;s.coins+=migrated;s.v=2;
+    if(s.pet&&s.pet.name==="ペンペン")s.pet.name="マロン";
+  }
+  return s;
+}
 function save(){mem=S;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let S=load();
+if(migrated)save();
 
 const $=id=>document.getElementById(id);
 const pad=n=>String(n).padStart(2,"0");
 const dayKey=ts=>{const d=new Date(ts);return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())};
+const count=id=>S.items.filter(t=>t.id===id).length;
 function level(){let lv=1;LEVELS.forEach((t,i)=>{if(S.totalMin>=t)lv=i+1});return lv}
 function streak(){
   const days=new Set(S.sessions.map(s=>s.d));
@@ -266,59 +292,120 @@ function bestStreak(){
 }
 function petStage(){let st=PET_STAGES[0];for(const p of PET_STAGES)if(S.pet.xp>=p.at)st=p;return st}
 
-/* ---------- island drawing ---------- */
-const CX=200,CY=150,MAXRX=172;
-const rxOf=lv=>92+lv*16;
-const SLOTS=Array.from({length:30},(_,i)=>{const r=Math.sqrt((i+.5)/30)*.8,a=i*2.39996;return{r,x:CX+r*Math.cos(a)*MAXRX,y:CY-6+r*Math.sin(a)*MAXRX*.38}});
-function slotOk(i,lv){return SLOTS[i].r*MAXRX<=rxOf(lv)*.74}
-function capacity(lv){return SLOTS.filter((_,i)=>slotOk(i,lv)).length}
-function freeSlot(){const used=new Set(S.items.map(t=>t.slot));const lv=level();for(let i=0;i<SLOTS.length;i++)if(!used.has(i)&&slotOk(i,lv))return i;return -1}
-
-const PETALS=["#FF8FB1","#FFD166","#FFFFFF","#B79CFF"];
+/* ---------- drawing: every item is drawn around (0,0) = its base point ---------- */
+const R=(x,y,w,h,f,ex)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${f}" ${ex||""}/>`;
+const WIN=(x,y,w,h,tr)=>R(x,y,w,h,"var(--window)",`stroke="${tr||"var(--trim)"}" stroke-width="1.5"`);
 const D={
-  grass:(x,y)=>`<path d="M${x-8} ${y}l3-11 3 11M${x-2} ${y}l3-14 3 14M${x+4} ${y}l3-9 3 9" fill="var(--grass2)"/>`,
-  rock:(x,y)=>`<ellipse cx="${x}" cy="${y-5}" rx="11" ry="7" fill="var(--rock)"/><ellipse cx="${x+8}" cy="${y-2}" rx="6" ry="4" fill="var(--rock)" opacity=".8"/><ellipse cx="${x-3}" cy="${y-8}" rx="4" ry="2" fill="var(--foam)" opacity=".35"/>`,
-  flower:(x,y,k)=>{const c=PETALS[k%PETALS.length];let p="";for(let i=0;i<5;i++){const a=i*1.2566;p+=`<circle cx="${(x+Math.cos(a)*3.6).toFixed(1)}" cy="${(y-13+Math.sin(a)*3.6).toFixed(1)}" r="2.8" fill="${c}"/>`}return`<path d="M${x} ${y}v-12" stroke="var(--leaf)" stroke-width="2"/><ellipse cx="${x+3}" cy="${y-5}" rx="3.5" ry="1.6" fill="var(--leaf)"/>${p}<circle cx="${x}" cy="${y-13}" r="2" fill="var(--coin)"/>`},
-  palm:(x,y)=>{let l="";[-165,-120,-60,-15].forEach(a=>{const r=a*Math.PI/180;l+=`<ellipse cx="${(x+4+Math.cos(r)*13).toFixed(1)}" cy="${(y-46+Math.sin(r)*7+5).toFixed(1)}" rx="15" ry="5" transform="rotate(${a<-90?a+180:a} ${(x+4+Math.cos(r)*13).toFixed(1)} ${(y-46+Math.sin(r)*7+5).toFixed(1)})" fill="${a%2?"var(--leaf)":"var(--leaf2)"}"/>`});return`<path d="M${x} ${y}q-7-22 4-46" stroke="var(--wood)" stroke-width="5" fill="none" stroke-linecap="round"/>${l}<circle cx="${x+2}" cy="${y-42}" r="3" fill="var(--wood)"/><circle cx="${x+7}" cy="${y-43}" r="3" fill="var(--wood)"/>`},
-  tree:(x,y)=>`<rect x="${x-3}" y="${y-16}" width="6" height="16" rx="2" fill="var(--wood)"/><circle cx="${x-9}" cy="${y-20}" r="9" fill="var(--leaf2)"/><circle cx="${x+9}" cy="${y-20}" r="9" fill="var(--leaf2)"/><circle cx="${x}" cy="${y-29}" r="13" fill="var(--leaf)"/>`,
-  tent:(x,y)=>`<polygon points="${x-16},${y} ${x},${y-24} ${x+16},${y}" fill="var(--tent)"/><polygon points="${x-5},${y} ${x},${y-12} ${x+5},${y}" fill="var(--dark)" opacity=".7"/><path d="M${x} ${y-24}v-5" stroke="var(--wood)" stroke-width="2"/>`,
-  field:(x,y)=>{let r="";for(let i=0;i<3;i++){r+=`<rect x="${x-17}" y="${y-14+i*5}" width="34" height="3.5" rx="1.7" fill="var(--wood)" opacity=".75"/>`;for(let j=0;j<4;j++)r+=`<circle cx="${x-12+j*8}" cy="${y-15+i*5}" r="1.8" fill="var(--grass)"/>`}return r},
-  house:(x,y)=>`<rect x="${x-15}" y="${y-19}" width="30" height="19" fill="var(--wall)"/><polygon points="${x-19},${y-18} ${x},${y-34} ${x+19},${y-18}" fill="var(--roof)"/><rect x="${x-4}" y="${y-11}" width="8" height="11" rx="1" fill="var(--wood)"/><rect x="${x+7}" y="${y-15}" width="6" height="6" fill="var(--window)"/><rect x="${x-13}" y="${y-15}" width="6" height="6" fill="var(--window)"/>`,
-  lighthouse:(x,y)=>`<polygon points="${x-10},${y} ${x-6},${y-52} ${x+6},${y-52} ${x+10},${y}" fill="var(--wall)"/><polygon points="${x-9},${y-12} ${x-8.2},${y-20} ${x+8.2},${y-20} ${x+9},${y-12}" fill="var(--roof)"/><polygon points="${x-7.6},${y-30} ${x-7},${y-38} ${x+7},${y-38} ${x+7.6},${y-30}" fill="var(--roof)"/><rect x="${x-6}" y="${y-61}" width="12" height="9" fill="var(--coin)"/><polygon points="${x-8},${y-61} ${x},${y-69} ${x+8},${y-61}" fill="var(--roof)"/>`,
-  boat:(x,y)=>`<path d="M${x-20} ${y-6}h40l-7 9h-26z" fill="var(--wood)"/><path d="M${x} ${y-6}v-26" stroke="var(--wood)" stroke-width="2"/><polygon points="${x+1},${y-31} ${x+1},${y-9} ${x+16},${y-9}" fill="var(--wall)"/>`
+  hedge:()=>`<rect x="-6" y="-9" width="12" height="9" rx="1.5" fill="var(--wood)"/><circle cy="-17" r="9" fill="var(--hedge)"/><circle cx="-3" cy="-20" r="3" fill="var(--grass)" opacity=".7"/>`,
+  lamp:()=>`<circle cy="-25" r="9" fill="var(--coin)" opacity=".25"/><rect x="-1.2" y="-22" width="2.4" height="22" fill="var(--dark)"/><rect x="-4" y="-29" width="8" height="8" rx="1.5" fill="var(--coin)"/><path d="M-5 -29h10l-5-4z" fill="var(--dark)"/>`,
+  palm:()=>{let l="";[-165,-120,-60,-15].forEach(a=>{const r=a*Math.PI/180,cx=(4+Math.cos(r)*13).toFixed(1),cy=(-41+Math.sin(r)*7).toFixed(1);l+=`<ellipse cx="${cx}" cy="${cy}" rx="15" ry="5" transform="rotate(${a<-90?a+180:a} ${cx} ${cy})" fill="${a%2?"var(--leaf)":"var(--leaf2)"}"/>`});return`<path d="M0 0q-7-22 4-46" stroke="var(--wood)" stroke-width="5" fill="none" stroke-linecap="round"/>${l}<circle cx="2" cy="-42" r="3" fill="var(--wood)"/><circle cx="7" cy="-43" r="3" fill="var(--wood)"/>`},
+  fountain:()=>`<ellipse cy="-4" rx="24" ry="7" fill="var(--rock)"/><ellipse cy="-6" rx="20" ry="5" fill="var(--water)"/><rect x="-3" y="-24" width="6" height="18" fill="var(--rock)"/><ellipse cy="-24" rx="10" ry="3" fill="var(--rock)"/><path d="M0 -27q-10-12-16 18M0 -27q10-12 16 18M0 -26v-9" stroke="var(--water2)" stroke-width="2" fill="none" stroke-linecap="round"/>`,
+  pool:()=>`<rect x="-66" y="-3" width="140" height="45" rx="12" fill="var(--wall)"/><rect x="-60" y="2" width="128" height="35" rx="9" fill="var(--water)"/><path d="M-46 12q8-4 16 0t16 0M-2 26q8-4 16 0t16 0M24 10q6-3 12 0" stroke="var(--water2)" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M58 0v10M64 0v10M58 4h6" stroke="var(--metal)" stroke-width="1.6" fill="none"/>`,
+  parasol:()=>`<path d="M-30 -3h20l8-9" stroke="var(--wall2)" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M-28 -2v3M-12 -2v3" stroke="var(--dark)" stroke-width="1.6"/><path d="M8 0v-36" stroke="var(--wood)" stroke-width="2"/><path d="M-12 -32Q8 -54 28 -32Z" fill="var(--red)"/><path d="M8 -43L-4 -32h5ZM8 -43L15 -32h5Z" fill="var(--wall)"/>`,
+  flamingo:()=>`<ellipse rx="12" ry="5" fill="var(--pink)"/><ellipse rx="5" ry="2" fill="var(--water)"/><path d="M8 -2q7-7 1-14q-2-5 4-6" stroke="var(--pink)" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M13 -22l4 2" stroke="var(--dark)" stroke-width="2" stroke-linecap="round"/>`,
+  chandelier:()=>{let c="";[-16,-8,8,16].forEach(x=>{const y=x*x>100?8:5;c+=`<rect x="${x-1.2}" y="${y}" width="2.4" height="6" fill="var(--crystal)"/><circle cx="${x}" cy="${y-1.5}" r="1.7" fill="var(--coin)"/>`});let d="";[-12,-4,4,12].forEach(x=>d+=`<circle cx="${x}" cy="${x*x>100?20:23}" r="1.8" fill="var(--crystal)"/>`);return`<circle cy="16" r="22" fill="var(--coin)" opacity=".28"/><path d="M0 0v9" stroke="var(--coin)" stroke-width="1.5"/>${c}<path d="M-16 14q16 12 32 0M-8 11q8 7 16 0" stroke="var(--coin)" stroke-width="2.5" fill="none"/><ellipse cy="10" rx="4" ry="2.5" fill="var(--coin)"/>${d}<path d="M0 22l2.5 4-2.5 4-2.5-4z" fill="var(--crystal)"/>`},
+  lion:()=>{const st=(dx,dir)=>`${R(dx-9,-8,18,8,"var(--wall2)")}<ellipse cx="${dx+dir*2}" cy="-13" rx="7.5" ry="5" fill="var(--coin)"/><path d="M${dx+dir*8} -14q${dir*5} -2 ${dir*4} -7" stroke="var(--coin)" stroke-width="2" fill="none"/><circle cx="${dx-dir*4}" cy="-19" r="6" fill="var(--coin)"/><circle cx="${dx-dir*5}" cy="-19" r="3.4" fill="var(--gold2)"/>`;return st(-40,1)+st(40,-1)},
+  car:()=>`<ellipse cy="0" rx="31" ry="3" fill="var(--dark)" opacity=".25"/><path d="M-29 -5Q-30 -13 -19 -15L-8 -22Q0 -25 11 -22L21 -15Q30 -14 29 -7L28 -4H-28Z" fill="var(--red)"/><path d="M-6 -20H8L15 -15H-12Z" fill="var(--window)"/><path d="M1 -20v5" stroke="var(--red)" stroke-width="1.5"/><rect x="24" y="-12" width="4" height="2.2" rx="1" fill="var(--coin)"/><path d="M-26 -9h8" stroke="var(--dark)" stroke-width="1.2" opacity=".5"/><circle cx="-17" cy="-4" r="6" fill="var(--dark)"/><circle cx="17" cy="-4" r="6" fill="var(--dark)"/><circle cx="-17" cy="-4" r="2.6" fill="var(--metal)"/><circle cx="17" cy="-4" r="2.6" fill="var(--metal)"/>`,
+  piano:()=>`<rect x="-34" y="-9" width="9" height="2.5" fill="var(--dark)"/><path d="M-33 -7v7M-26 -7v7" stroke="var(--dark)" stroke-width="1.5"/><path d="M-22 -12V-22H4C14 -22 20 -18 22 -12Z" fill="var(--dark)"/><path d="M-20 -22L10 -37L13 -35L-2 -22Z" fill="var(--dark)" opacity=".85"/><rect x="-25" y="-16" width="7" height="3" fill="var(--crystal)"/><rect x="-20" y="-12" width="3" height="12" fill="var(--dark)"/><rect x="16" y="-12" width="3" height="12" fill="var(--dark)"/>`,
+  helicopter:()=>`<path d="M-22 -13h44M0 -13v-0" stroke="var(--heli)" stroke-width="2.4" stroke-linecap="round"/><path d="M0 -13v5" stroke="var(--heli)" stroke-width="2"/><rect x="10" y="-3" width="24" height="4" rx="2" fill="var(--heli)"/><path d="M34 -7v10" stroke="var(--heli)" stroke-width="2"/><ellipse rx="16" ry="9" fill="var(--heli)"/><ellipse cx="-7" cy="-2" rx="6" ry="4.5" fill="var(--window)"/><rect x="-14" y="3" width="26" height="2" fill="var(--coin)"/><path d="M-10 9v4M6 9v4M-14 13h24" stroke="var(--heli)" stroke-width="1.8" fill="none" stroke-linecap="round"/>`
 };
-function drawPet(x,y,xp,s){
-  s=s||1;const st=petStage().n;const g=(inner)=>`<g transform="translate(${x} ${y}) scale(${s})">${inner}</g>`;
-  if(st==="たまご")return g(`<ellipse cx="0" cy="-10" rx="8" ry="10" fill="var(--wall)"/><circle cx="-3" cy="-13" r="1.6" fill="var(--sea2)"/><circle cx="3" cy="-7" r="2" fill="var(--sea2)"/>`);
-  const big=st==="おとな"?1.35:st==="こども"?1.15:1;
-  const body=`<ellipse cx="0" cy="${-12*big}" rx="${10*big}" ry="${12*big}" fill="var(--dark)"/><ellipse cx="0" cy="${-10*big}" rx="${6.5*big}" ry="${9*big}" fill="var(--wall)"/><circle cx="${-3*big}" cy="${-17*big}" r="1.5" fill="var(--dark)"/><circle cx="${3*big}" cy="${-17*big}" r="1.5" fill="var(--dark)"/><polygon points="${-2.5*big},${-14*big} ${2.5*big},${-14*big} 0,${-11*big}" fill="var(--coin)"/><ellipse cx="${-4*big}" cy="0" rx="3.5" ry="1.6" fill="var(--coin)"/><ellipse cx="${4*big}" cy="0" rx="3.5" ry="1.6" fill="var(--coin)"/>`;
-  const scarf=st==="おとな"?`<rect x="${-8*big}" y="${-22*big}" width="${16*big}" height="3.5" rx="1.7" fill="var(--roof)"/><rect x="${4*big}" y="${-21*big}" width="3.5" height="9" rx="1.5" fill="var(--roof)"/>`:"";
-  return g(body+scarf);
+const POS={
+  hedge:[{x:122,y:178},{x:258,y:178},{x:100,y:184},{x:280,y:184}],
+  lamp:[{x:166,y:208},{x:214,y:208},{x:158,y:248},{x:224,y:248}],
+  palm:[{x:18,y:192},{x:388,y:176},{x:14,y:266}],
+  fountain:[{x:252,y:228}],
+  pool:[{x:90,y:200}],
+  parasol:[{x:58,y:197}],
+  flamingo:[{x:104,y:222}],
+  lion:[{x:190,y:182}],
+  car:[{x:342,y:240}],
+  helicopter:[{x:322,y:52}]
+};
+const place=(id,x,y,s)=>`<g transform="translate(${x} ${y})${s&&s!==1?` scale(${s})`:""}">${D[id]()}</g>`;
+
+function building(lv){
+  let s="",chand=null,piano=null;
+  if(lv===1){
+    s+=R(226,96,10,22,"var(--wall2)")+`<polygon points="122,124 190,90 258,124" fill="var(--roof)"/>`+R(130,122,120,50,"var(--wall)")+R(182,146,16,26,"var(--wood)",'rx="2"')+WIN(142,134,24,18)+WIN(214,134,24,18);
+  }else if(lv===2){
+    s+=`<polygon points="105,94 190,58 275,94" fill="var(--roof)"/>`+R(115,92,150,80,"var(--wall)")+R(115,130,150,4,"var(--trim)");
+    [132,179,226].forEach(x=>s+=WIN(x,102,22,20));[132,226].forEach(x=>s+=WIN(x,142,22,20));
+    s+=R(176,138,28,4,"var(--roof)")+R(180,142,20,30,"var(--wood)",'rx="2"');
+  }else if(lv===3){
+    s+=R(262,126,48,46,"var(--wall2)")+R(258,121,56,6,"var(--roof)")+R(112,92,150,80,"var(--wall)")+R(102,85,170,8,"var(--roof)")
+      +R(130,102,76,60,"var(--window)",'stroke="var(--trim)" stroke-width="2"')+`<path d="M180 102V162" stroke="var(--trim)" stroke-width="2"/>`
+      +WIN(222,102,28,22)+R(222,138,24,34,"var(--wood)",'rx="2"')+WIN(272,136,28,18);
+    chand={x:155,y:103,s:.85};
+  }else if(lv===4){
+    s+=`<polygon points="80,99 88,88 137,88 145,99" fill="var(--roof)"/><polygon points="235,99 243,88 292,88 300,99" fill="var(--roof)"/>`
+      +R(80,104,65,68,"var(--wall2)")+R(235,104,65,68,"var(--wall2)")+R(76,99,73,6,"var(--trim)")+R(231,99,73,6,"var(--trim)")
+      +R(145,80,90,92,"var(--wall)")+R(139,78,102,5,"var(--trim)")
+      +`<polygon points="141,78 190,52 239,78" fill="var(--wall)" stroke="var(--trim)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="190" cy="68" r="5" fill="var(--window)"/>`
+      +`<path d="M174 116V100a16 16 0 0 1 32 0V116Z" fill="var(--window)" stroke="var(--trim)" stroke-width="2"/>`
+      +WIN(92,110,16,12)+WIN(120,110,16,12)+R(88,128,50,32,"var(--window)",'stroke="var(--trim)" stroke-width="2"')
+      +WIN(247,110,16,12)+WIN(271,110,16,12)+WIN(247,132,16,22)+WIN(271,132,16,22)
+      +R(145,117,90,4,"var(--trim)")+`<path d="M180 172V146a10 10 0 0 1 20 0V172Z" fill="var(--wood)"/>`;
+    [150,166,206,222].forEach(x=>s+=R(x,121,8,51,"var(--wall)",'stroke="var(--trim)" stroke-width="1"')+R(x-2,120,12,3,"var(--trim)"));
+    chand={x:190,y:88,s:.65};piano={x:113,y:158,s:.55};
+  }else{
+    s+=`<polygon points="66,84 74,72 134,72 142,84" fill="var(--roof)"/><polygon points="238,84 246,72 306,72 314,84" fill="var(--roof)"/>`
+      +R(66,90,76,82,"var(--wall2)")+R(238,90,76,82,"var(--wall2)")+R(62,84,84,6,"var(--coin)")+R(234,84,84,6,"var(--coin)")
+      +R(166,44,48,14,"var(--wall2)")+`<path d="M162 44a28 26 0 0 1 56 0Z" fill="var(--roof)"/><path d="M190 18v-7" stroke="var(--coin)" stroke-width="2"/><circle cx="190" cy="9" r="2.6" fill="var(--coin)"/>`
+      +R(142,60,96,112,"var(--wall)")+R(136,56,108,6,"var(--coin)")
+      +`<path d="M174 104V84a16 16 0 0 1 32 0V104Z" fill="var(--window)" stroke="var(--coin)" stroke-width="2"/>`
+      +WIN(150,72,14,24,"var(--coin)")+WIN(216,72,14,24,"var(--coin)");
+    [76,98,120].forEach(x=>s+=WIN(x,98,14,18));
+    s+=R(74,128,60,34,"var(--window)",'stroke="var(--coin)" stroke-width="2"');
+    [248,270,292].forEach(x=>s+=WIN(x,98,14,18)+WIN(x,132,14,24));
+    s+=R(142,108,96,4,"var(--coin)")+`<path d="M178 172V144a12 12 0 0 1 24 0V172Z" fill="var(--wood)"/><circle cx="186" cy="160" r="1.4" fill="var(--coin)"/><circle cx="194" cy="160" r="1.4" fill="var(--coin)"/>`;
+    [148,164,208,224].forEach(x=>s+=R(x,112,8,60,"var(--wall)",'stroke="var(--trim)" stroke-width="1"')+R(x-2,111,12,3,"var(--coin)"));
+    chand={x:190,y:72,s:.62};piano={x:104,y:160,s:.6};
+  }
+  return{s,chand,piano};
 }
+function drawPet(x,y,s){
+  const st=petStage().n,f={"あかちゃん":.7,"こいぬ":.85,"わんこ":1,"セレブ犬":1.15}[st]*(s||1);
+  let g=`<path d="M11 -11q8-3 6-12" stroke="var(--dog)" stroke-width="3" fill="none" stroke-linecap="round"/>`
+   +`<rect x="-4" y="-5" width="3" height="5" rx="1" fill="var(--dog2)"/><rect x="8" y="-5" width="3" height="5" rx="1" fill="var(--dog2)"/>`
+   +`<ellipse cx="3" cy="-9" rx="11" ry="6.5" fill="var(--dog)"/>`
+   +`<rect x="-1" y="-5" width="3" height="5" rx="1" fill="var(--dog)"/><rect x="11" y="-5" width="3" height="5" rx="1" fill="var(--dog)"/>`
+   +`<circle cx="-8" cy="-16" r="7" fill="var(--dog)"/>`
+   +`<ellipse cx="-14" cy="-15" rx="2.6" ry="5" transform="rotate(15 -14 -15)" fill="var(--dog2)"/><ellipse cx="-2" cy="-15" rx="2.6" ry="5" transform="rotate(-15 -2 -15)" fill="var(--dog2)"/>`
+   +`<ellipse cx="-8" cy="-12.5" rx="3.6" ry="2.6" fill="var(--wall)"/><circle cx="-8" cy="-13.6" r="1.4" fill="var(--dark)"/>`
+   +`<circle cx="-10.6" cy="-17.5" r="1.1" fill="var(--dark)"/><circle cx="-5.4" cy="-17.5" r="1.1" fill="var(--dark)"/>`;
+  if(st==="わんこ"||st==="セレブ犬")g+=`<path d="M-13.5 -10q5.5 3 11 0" stroke="var(--coin)" stroke-width="2" fill="none"/><circle cx="-8" cy="-8.2" r="1.5" fill="var(--coin)"/>`;
+  if(st==="セレブ犬")g+=`<path d="M-13 -22.5l1.5-5 2 3 1.5-4 1.5 4 2-3 1.5 5z" fill="var(--coin)"/>`;
+  return`<g transform="translate(${x} ${y}) scale(${f.toFixed(2)})">${g}</g>`;
+}
+function cloud(x,y,s){return`<g transform="translate(${x} ${y}) scale(${s})" fill="var(--cloud)" opacity=".9"><circle r="9"/><circle cx="11" cy="-4" r="11"/><circle cx="23" cy="1" r="8"/><rect y="0" width="23" height="8"/></g>`}
+
 function renderIsland(){
-  const lv=level(),rx=rxOf(lv),ry=rx*.42;
-  let o=`<g class="wave" opacity=".55">`;
-  [[40,40],[300,30],[70,235],[330,245],[20,140],[370,120]].forEach(([x,y])=>{o+=`<path d="M${x} ${y}q6-5 12 0t12 0" stroke="var(--foam)" stroke-width="2" fill="none" stroke-linecap="round"/>`});
-  o+=`</g>`;
-  o+=`<ellipse cx="${CX}" cy="${CY+8}" rx="${rx+14}" ry="${ry+10}" fill="var(--foam)" opacity=".35"/>`;
-  o+=`<ellipse cx="${CX}" cy="${CY+4}" rx="${rx}" ry="${ry}" fill="var(--sand2)"/>`;
-  o+=`<ellipse cx="${CX}" cy="${CY}" rx="${rx}" ry="${ry}" fill="var(--sand)"/>`;
-  o+=`<ellipse cx="${CX}" cy="${CY-6}" rx="${rx*.84}" ry="${ry*.72}" fill="var(--grass)"/>`;
-  const parts=[];let k=0;
-  S.items.forEach(t=>{const f=D[t.id];if(!f)return;
-    if(t.id==="boat"){parts.push({y:999,s:f(330,232)});return}
-    const p=SLOTS[t.slot];if(!p)return;parts.push({y:p.y,s:f(Math.round(p.x),Math.round(p.y),k++)});});
-  parts.push({y:CY+ry*.62,s:drawPet(CX+rx*.5,CY+ry*.66)});
+  const lv=level();
+  let o=`<circle cx="374" cy="32" r="14" fill="var(--sun)"/>`;
+  [[28,20],[110,64],[148,14],[250,52],[300,18],[372,30],[214,30],[90,30]].forEach(([x,y])=>o+=`<circle cx="${x}" cy="${y}" r="1.3" fill="var(--star)"/>`);
+  o+=`<g class="wave">${cloud(108,36,.9)}${cloud(232,22,.75)}${cloud(352,94,.6)}</g>`;
+  o+=`<rect x="-10" y="156" width="420" height="20" rx="10" fill="var(--hedge)"/>`;
+  o+=`<rect x="0" y="170" width="400" height="100" fill="var(--grass)"/>`;
+  for(let i=-1;i<8;i++){const x=i*56;o+=`<polygon points="${x},170 ${x+28},170 ${x+8},270 ${x-20},270" fill="var(--grass2)"/>`}
+  o+=`<polygon points="300,174 400,174 400,270 270,270" fill="var(--drive)"/>`;
+  o+=`<polygon points="182,172 198,172 214,270 166,270" fill="var(--path)"/>`;
+  const B=building(lv);o+=B.s;
+  if(count("chandelier")&&B.chand)o+=place("chandelier",B.chand.x,B.chand.y,B.chand.s);
+  if(count("piano")&&B.piano)o+=place("piano",B.piano.x,B.piano.y,B.piano.s);
+  const parts=[],seen={};
+  S.items.forEach(t=>{if(!POS[t.id]||t.id==="helicopter")return;const i=seen[t.id]=(seen[t.id]||0);seen[t.id]++;const p=POS[t.id][i];if(p)parts.push({y:p.y,s:place(t.id,p.x,p.y)})});
+  parts.push({y:264,s:drawPet(236,264)});
   parts.sort((a,b)=>a.y-b.y).forEach(p=>o+=p.s);
+  if(count("helicopter"))o+=`<g class="wave">${place("helicopter",322,52)}</g>`;
   $("island").innerHTML=o;
-  $("lvNum").textContent=lv;
+  $("lvNum").textContent=lv;$("lvName").textContent=LEVEL_NAMES[lv];
   const next=LEVELS[lv];
-  if(next){const prev=LEVELS[lv-1];$("lvBar").style.width=Math.min(100,(S.totalMin-prev)/(next-prev)*100)+"%";$("lvText").textContent=`あと${next-S.totalMin}分の休憩で島が広がる（合計 ${S.totalMin}分）`}
-  else{$("lvBar").style.width="100%";$("lvText").textContent=`島は最大サイズ！ 合計 ${S.totalMin}分`}
-  $("petPreview").innerHTML=`<ellipse cx="30" cy="54" rx="18" ry="4" fill="var(--sand2)"/>`+drawPet(30,54,0,1.2);
+  if(next){const prev=LEVELS[lv-1];$("lvBar").style.width=Math.min(100,(S.totalMin-prev)/(next-prev)*100)+"%";$("lvText").textContent=`あと${next-S.totalMin}分の休憩で「${LEVEL_NAMES[lv+1]}」にグレードアップ（合計 ${S.totalMin}分）`}
+  else{$("lvBar").style.width="100%";$("lvText").textContent=`最高ランクの大豪邸！ 合計 ${S.totalMin}分`}
+  $("petPreview").innerHTML=`<ellipse cx="30" cy="53" rx="22" ry="4" fill="var(--grass)"/>`+drawPet(31,52,1.5);
   $("petName").textContent=S.pet.name;
   const st=petStage(),nx=PET_STAGES.find(p=>p.at>S.pet.xp);
-  $("petStage").textContent=`いまは「${st.n}」。成功 ${S.pet.xp}回`+(nx?`／あと${nx.at-S.pet.xp}回で「${nx.n}」に。`:"／もう立派なおとな！");
+  $("petStage").textContent=`いまは「${st.n}」。成功 ${S.pet.xp}回`+(nx?`／あと${nx.at-S.pet.xp}回で「${nx.n}」に。`:"／王冠をつけたセレブ犬になりました！");
 }
 
 /* ---------- home controls ---------- */
@@ -345,7 +432,6 @@ $("startBtn").addEventListener("click",()=>{
 });
 $("wakeInput").addEventListener("change",e=>{S.wake=e.target.value||"07:00";save()});
 $("sleepBtn").addEventListener("click",()=>{
-  const today=dayKey(Date.now());
   const [h,m]=(S.wake||"07:00").split(":").map(Number);
   const now=new Date(),end=new Date();end.setHours(h,m,0,0);
   if(end-now<60*60000)end.setDate(end.getDate()+1);
@@ -381,7 +467,7 @@ function complete(){
     const d=dayKey(now),already=S.sleeps.includes(d);
     if(!already){S.sleeps.push(d);S.pet.xp++;S.coins+=a.coins}
     save();$("focus").hidden=true;chime();renderAll();bumpCoins();
-    openSheet(`<h3>おはよう！おやすみチャレンジ成功</h3>${already?`<p>今日の分はもう記録済みです。</p>`:`<div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div><p>${S.pet.name}が少し育ちました（成功 ${S.pet.xp}回）。</p>`}<button class="primary" data-close>島を見る</button>`);
+    openSheet(`<h3>おはよう！おやすみチャレンジ成功</h3>${already?`<p>今日の分はもう記録済みです。</p>`:`<div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div><p>${S.pet.name}が少し育ちました（成功 ${S.pet.xp}回）。</p>`}<button class="primary" data-close>家を見る</button>`);
     return;
   }
   const sess={d:dayKey(now),t:now,min:a.min,mission:a.mission,mDone:false};
@@ -389,41 +475,46 @@ function complete(){
   const lvBefore=LEVELS.filter(t=>S.totalMin-a.min>=t).length,lvAfter=level();
   save();$("focus").hidden=true;chime();renderAll();bumpCoins();
   let h=`<h3>${a.min}分のスマホ休憩、達成！</h3><div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div>`;
-  if(lvAfter>lvBefore)h+=`<p><b>島がレベル${lvAfter}に広がった！</b> 置ける場所が増えました。</p>`;
+  if(lvAfter>lvBefore)h+=`<p><b>家が「${LEVEL_NAMES[lvAfter]}」にグレードアップ！</b> 新しいアイテムが解放されました。</p>`;
   if(a.mission){h+=`<p>ミッション「${missionName(a.mission)}」はできた？</p><div class="btnrow"><button class="primary" id="mYes">できた！ +${MISSION_BONUS}</button><button class="ghost" data-close>今回はパス</button></div>`}
-  else h+=`<button class="primary" data-close>島を見る</button>`;
+  else h+=`<button class="primary" data-close>家を見る</button>`;
   openSheet(h);
   const y=$("mYes");if(y)y.addEventListener("click",()=>{sess.mDone=true;S.coins+=MISSION_BONUS;save();renderAll();bumpCoins();closeSheet();toast("ミッション達成！ +"+MISSION_BONUS+"コイン")});
 }
 $("giveUpBtn").addEventListener("click",()=>{
   const a=S.active;if(!a)return;
   const sleep=a.type==="sleep";
-  openSheet(`<h3>${sleep?"もう起きる？":"チャレンジをやめる？"}</h3><p>${sleep?"起きる時間の前なので、今回は記録されません。":"今回のコインはもらえませんが、島はそのまま。"}また次にチャレンジしよう。</p><div class="btnrow"><button class="ghost" id="quitYes">${sleep?"起きる":"やめる"}</button><button class="primary" data-close>つづける</button></div>`);
+  openSheet(`<h3>${sleep?"もう起きる？":"チャレンジをやめる？"}</h3><p>${sleep?"起きる時間の前なので、今回は記録されません。":"今回のコインはもらえませんが、家はそのまま。"}また次にチャレンジしよう。</p><div class="btnrow"><button class="ghost" id="quitYes">${sleep?"起きる":"やめる"}</button><button class="primary" data-close>つづける</button></div>`);
   $("quitYes").addEventListener("click",()=>{S.active=null;save();clearInterval(tick);$("focus").hidden=true;closeSheet();toast("また挑戦しよう！")});
 });
 document.addEventListener("visibilitychange",()=>{if(!document.hidden&&S.active)update()});
 
 /* ---------- shop ---------- */
+const PREV={hedge:[60,70,1.5],lamp:[60,72,1.6],palm:[56,74,1],fountain:[60,68,1.6],pool:[52,24,.68],parasol:[60,72,1.3],flamingo:[56,56,2],chandelier:[60,10,1.6],lion:[60,68,1.05],car:[60,66,1.6],piano:[66,68,1.3],helicopter:[52,42,1.6]};
 function previewSvg(id){
-  const f=D[id];const y=id==="boat"?66:68;
-  const bg=id==="boat"?`<rect width="120" height="80" fill="var(--sea1)"/>`:`<ellipse cx="60" cy="70" rx="40" ry="8" fill="var(--grass)"/>`;
-  return`<svg viewBox="0 0 120 80" aria-hidden="true">${bg}<g transform="translate(60 ${y}) scale(1.25) translate(-60 -${y})">${f(60,y,0)}</g></svg>`;
+  const [x,y,s]=PREV[id];
+  const bg={chandelier:`<rect width="120" height="80" fill="var(--wall2)"/>`,piano:`<rect width="120" height="80" fill="var(--wall2)"/><rect y="68" width="120" height="12" fill="var(--wood)" opacity=".5"/>`,flamingo:`<rect width="120" height="80" fill="var(--water)"/>`,helicopter:`<rect width="120" height="80" fill="var(--sky1)"/>`,car:`<rect y="56" width="120" height="24" fill="var(--drive)"/>`,pool:`<rect width="120" height="80" fill="var(--grass)"/>`}[id]||`<ellipse cx="60" cy="72" rx="44" ry="8" fill="var(--grass)"/>`;
+  return`<svg viewBox="0 0 120 80" aria-hidden="true">${bg}${place(id,x,y,s)}</svg>`;
+}
+function lockReason(it){
+  if(it.max&&count(it.id)>=it.max)return"もってる";
+  if(level()<it.lv)return`Lv${it.lv}「${LEVEL_NAMES[it.lv]}」で解放`;
+  if(it.needs&&!count(it.needs))return"プールが必要";
+  return null;
 }
 function renderShop(){
-  const lv=level(),cap=capacity(lv),used=S.items.filter(t=>t.id!=="boat").length;
-  $("slotNote").textContent=`置ける場所 ${used}/${cap}`+(lv<5?"（島レベルが上がると増えます）":"");
+  const lv=level();
+  $("slotNote").textContent=`いまの家：Lv${lv}「${LEVEL_NAMES[lv]}」`+(lv<5?"。家がグレードアップすると、新しいアイテムが解放されます。":"。すべてのアイテムが解放されています。");
   $("shop").innerHTML=CATALOG.map(it=>{
-    const own=S.items.filter(t=>t.id===it.id).length;
-    const maxed=it.max&&own>=it.max, noSlot=!it.sea&&freeSlot()<0, poor=S.coins<it.price;
-    const label=maxed?"もってる":noSlot?"場所がない":`<span class="coin-ico">¢</span>${it.price}`;
-    return`<div class="item">${previewSvg(it.id)}<div class="name">${it.name}<small>${own?own+"こ":""}</small></div><button class="buy" data-id="${it.id}" ${maxed||noSlot||poor?"disabled":""}>${label}</button></div>`;
+    const own=count(it.id),lock=lockReason(it),poor=S.coins<it.price;
+    const label=lock||`<span class="coin-ico">¢</span>${it.price}`;
+    return`<div class="item${lock&&lock!=="もってる"?" locked":""}">${previewSvg(it.id)}<div class="name">${it.name}<small>${own&&it.max>1?own+"/"+it.max:""}</small></div><button class="buy" data-id="${it.id}" ${lock||poor?"disabled":""}>${label}</button></div>`;
   }).join("");
 }
 $("shop").addEventListener("click",e=>{
   const b=e.target.closest(".buy");if(!b||b.disabled)return;
-  const it=CATALOG.find(c=>c.id===b.dataset.id);if(S.coins<it.price)return;
-  const slot=it.sea?-1:freeSlot();if(!it.sea&&slot<0)return;
-  S.coins-=it.price;S.items.push({id:it.id,slot});save();renderAll();bumpCoins();toast(it.name+"を島に置きました");
+  const it=CATALOG.find(c=>c.id===b.dataset.id);if(lockReason(it)||S.coins<it.price)return;
+  S.coins-=it.price;S.items.push({id:it.id});save();renderAll();bumpCoins();toast(it.name+"を手に入れました！");
 });
 
 /* ---------- records ---------- */
@@ -435,13 +526,12 @@ const BADGES=[
   {n:"合計5時間",m:"5h",ok:()=>S.totalMin>=300},
   {n:"ミッション10回",m:"10",ok:()=>S.sessions.filter(s=>s.mDone).length>=10},
   {n:"おやすみ3回",m:"夜",ok:()=>S.pet.xp>=3},
-  {n:"島レベル3",m:"島",ok:()=>level()>=3},
-  {n:"おうちを建てた",m:"家",ok:()=>S.items.some(t=>t.id==="house")}
+  {n:"別荘を手に入れた",m:"邸",ok:()=>level()>=3},
+  {n:"スポーツカーを買った",m:"車",ok:()=>count("car")>0}
 ];
 function renderLog(){
   const st=streak();
   $("stats").innerHTML=[[st,"連続日数"],[S.totalMin,"合計（分）"],[S.sessions.length,"成功回数"]].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
-  // 7-day chart
   const days=[];const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-6);
   for(let i=0;i<7;i++){const k=dayKey(d);days.push({k,w:"日月火水木金土"[d.getDay()],m:S.sessions.filter(s=>s.d===k).reduce((a,s)=>a+s.min,0)});d.setDate(d.getDate()+1)}
   const mx=Math.max(...days.map(x=>x.m));const top=mx<=30?30:mx<=60?60:mx<=120?120:Math.ceil(mx/60)*60;
@@ -458,7 +548,7 @@ function renderLog(){
   $("hist").innerHTML=rec.length?rec.map(r=>{const t=new Date(r.t);return`<li><span>${r.min}分の休憩${r.mission?`・${missionName(r.mission)}${r.mDone?"（できた）":""}`:""}</span><span>${t.getMonth()+1}/${t.getDate()} ${t.getHours()}:${pad(t.getMinutes())}</span></li>`}).join(""):`<li><span>まだ記録がありません。まずは15分から挑戦してみよう。</span></li>`;
 }
 $("resetBtn").addEventListener("click",()=>{
-  openSheet(`<h3>記録をリセットしますか？</h3><p>コイン・島・ペット・記録がすべて最初に戻ります。元には戻せません。</p><div class="btnrow"><button class="ghost" id="rYes">リセットする</button><button class="primary" data-close>やめておく</button></div>`);
+  openSheet(`<h3>記録をリセットしますか？</h3><p>コイン・家・ペット・記録がすべて最初に戻ります。元には戻せません。</p><div class="btnrow"><button class="ghost" id="rYes">リセットする</button><button class="primary" data-close>やめておく</button></div>`);
   $("rYes").addEventListener("click",()=>{S=fresh();save();closeSheet();renderAll();toast("リセットしました")});
 });
 
@@ -466,7 +556,7 @@ $("resetBtn").addEventListener("click",()=>{
 function openSheet(h){$("sheet").innerHTML=h;$("modal").hidden=false;$("sheet").querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",closeSheet));const f=$("sheet").querySelector("button");if(f)f.focus()}
 function closeSheet(){$("modal").hidden=true}
 $("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeSheet()});
-let tt;function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2200)}
+let tt;function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
 function bumpCoins(){const c=$("coins");c.classList.remove("bump");void c.offsetWidth;c.classList.add("bump")}
 let actx=null;
 function unlockAudio(){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==="suspended")actx.resume()}catch(e){}}
@@ -482,6 +572,7 @@ document.querySelector(".tabs").addEventListener("click",e=>{
 
 function renderAll(){$("coinNum").textContent=S.coins;$("wakeInput").value=S.wake||"07:00";renderIsland();renderDur();renderShop();renderLog()}
 renderAll();
+if(migrated)toast(`豪邸モードになりました！ 島のアイテムはコインで返却しました（+${migrated}）`);
 if(S.active)showFocus();
 })();
 </script>
