@@ -100,7 +100,6 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .buy:disabled,.buy.off{opacity:.6}
 .buy:disabled{cursor:default}
 .buy small{font-size:11.5px;font-weight:700;color:var(--muted)}
-.test{display:grid;gap:8px}
 .buy .coin-ico{width:16px;height:16px;font-size:9px}
 
 /* records */
@@ -575,16 +574,6 @@ document.querySelector(".tabs").addEventListener("click",e=>{
   document.querySelectorAll(".view").forEach(s=>{s.hidden=s.id!=="view-"+v});
   window.scrollTo(0,0);renderAll();
 });
-
-/* ---------- テストモード（タイトルを7回タップ） ---------- */
-let taps=0,tapT=null;
-document.querySelector(".brand b").addEventListener("click",()=>{taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,1500);if(taps>=7){taps=0;openTest()}});
-function openTest(){
-  openSheet(`<h3>テストモード</h3><p class="note">動作確認用です。本番公開の前に取り外します。</p><div class="test"><button class="ghost" id="tCoin">コイン +500</button><button class="ghost" id="tLv">家を1段階グレードアップ</button><button class="ghost" id="tPet">おやすみ成功 +1（ペットが育つ）</button><button class="primary" data-close>閉じる</button></div>`);
-  $("tCoin").addEventListener("click",()=>{S.coins+=500;save();renderAll();bumpCoins();toast("コインを500枚追加しました")});
-  $("tLv").addEventListener("click",()=>{const lv=level();if(lv>=5){toast("もう大豪邸です");return}S.totalMin=LEVELS[lv];save();renderAll();toast(`「${LEVEL_NAMES[lv+1]}」になりました`)});
-  $("tPet").addEventListener("click",()=>{S.pet.xp++;save();renderAll();toast(`${S.pet.name}が育ちました（成功 ${S.pet.xp}回）`)});
-}
 
 function renderAll(){$("coinNum").textContent=S.coins;$("wakeInput").value=S.wake||"07:00";renderIsland();renderDur();renderShop();renderLog()}
 renderAll();
