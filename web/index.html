@@ -97,7 +97,10 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .item .name small{font-weight:500;color:var(--muted);font-size:11.5px;white-space:nowrap}
 .item.locked svg{filter:grayscale(.85);opacity:.6}
 .buy{display:flex;align-items:center;justify-content:center;gap:6px;border-radius:12px;padding:8px;background:var(--accent-soft);font-weight:800;font-variant-numeric:tabular-nums;font-size:14px}
-.buy:disabled{opacity:.55;cursor:not-allowed}
+.buy:disabled,.buy.off{opacity:.6}
+.buy:disabled{cursor:default}
+.buy small{font-size:11.5px;font-weight:700;color:var(--muted)}
+.test{display:grid;gap:8px}
 .buy .coin-ico{width:16px;height:16px;font-size:9px}
 
 /* records */
@@ -506,14 +509,17 @@ function renderShop(){
   const lv=level();
   $("slotNote").textContent=`いまの家：Lv${lv}「${LEVEL_NAMES[lv]}」`+(lv<5?"。家がグレードアップすると、新しいアイテムが解放されます。":"。すべてのアイテムが解放されています。");
   $("shop").innerHTML=CATALOG.map(it=>{
-    const own=count(it.id),lock=lockReason(it),poor=S.coins<it.price;
-    const label=lock||`<span class="coin-ico">¢</span>${it.price}`;
-    return`<div class="item${lock&&lock!=="もってる"?" locked":""}">${previewSvg(it.id)}<div class="name">${it.name}<small>${own&&it.max>1?own+"/"+it.max:""}</small></div><button class="buy" data-id="${it.id}" ${lock||poor?"disabled":""}>${label}</button></div>`;
+    const own=count(it.id),lock=lockReason(it),short=it.price-S.coins;
+    const label=lock||`<span class="coin-ico">¢</span>${it.price}`+(short>0?`<small>あと${short}</small>`:"");
+    return`<div class="item${lock&&lock!=="もってる"?" locked":""}">${previewSvg(it.id)}<div class="name">${it.name}<small>${own&&it.max>1?own+"/"+it.max:""}</small></div><button class="buy${lock||short>0?" off":""}" data-id="${it.id}" ${lock==="もってる"?"disabled":""}>${label}</button></div>`;
   }).join("");
 }
 $("shop").addEventListener("click",e=>{
   const b=e.target.closest(".buy");if(!b||b.disabled)return;
-  const it=CATALOG.find(c=>c.id===b.dataset.id);if(lockReason(it)||S.coins<it.price)return;
+  const it=CATALOG.find(c=>c.id===b.dataset.id),lock=lockReason(it);
+  if(lock==="プールが必要"){toast("先にプールを買うと置けるようになります");return}
+  if(lock){toast(`家が「${LEVEL_NAMES[it.lv]}」になると買えます。あと${Math.max(0,LEVELS[it.lv-1]-S.totalMin)}分休憩しよう`);return}
+  if(S.coins<it.price){toast(`コインがあと${it.price-S.coins}枚たりません。チャレンジでためよう`);return}
   S.coins-=it.price;S.items.push({id:it.id});save();renderAll();bumpCoins();toast(it.name+"を手に入れました！");
 });
 
@@ -569,6 +575,16 @@ document.querySelector(".tabs").addEventListener("click",e=>{
   document.querySelectorAll(".view").forEach(s=>{s.hidden=s.id!=="view-"+v});
   window.scrollTo(0,0);renderAll();
 });
+
+/* ---------- テストモード（タイトルを7回タップ） ---------- */
+let taps=0,tapT=null;
+document.querySelector(".brand b").addEventListener("click",()=>{taps++;clearTimeout(tapT);tapT=setTimeout(()=>taps=0,1500);if(taps>=7){taps=0;openTest()}});
+function openTest(){
+  openSheet(`<h3>テストモード</h3><p class="note">動作確認用です。本番公開の前に取り外します。</p><div class="test"><button class="ghost" id="tCoin">コイン +500</button><button class="ghost" id="tLv">家を1段階グレードアップ</button><button class="ghost" id="tPet">おやすみ成功 +1（ペットが育つ）</button><button class="primary" data-close>閉じる</button></div>`);
+  $("tCoin").addEventListener("click",()=>{S.coins+=500;save();renderAll();bumpCoins();toast("コインを500枚追加しました")});
+  $("tLv").addEventListener("click",()=>{const lv=level();if(lv>=5){toast("もう大豪邸です");return}S.totalMin=LEVELS[lv];save();renderAll();toast(`「${LEVEL_NAMES[lv+1]}」になりました`)});
+  $("tPet").addEventListener("click",()=>{S.pet.xp++;save();renderAll();toast(`${S.pet.name}が育ちました（成功 ${S.pet.xp}回）`)});
+}
 
 function renderAll(){$("coinNum").textContent=S.coins;$("wakeInput").value=S.wake||"07:00";renderIsland();renderDur();renderShop();renderLog()}
 renderAll();
