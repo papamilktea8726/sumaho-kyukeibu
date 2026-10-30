@@ -24,6 +24,9 @@ FACES = [
 ]
 
 text = open("web/index.html", encoding="utf-8").read()
+# Android版・iPhone版で追加する文言も含める
+for extra in ("tools/build_www.py", "tools/build_pwa.py"):
+    text += open(extra, encoding="utf-8").read()
 chars = set(text)
 for a, b in [(0x20, 0x7E), (0x3000, 0x30FF), (0xFF01, 0xFF5E)]:  # 英数・かな・全角記号
     chars.update(chr(c) for c in range(a, b + 1))
