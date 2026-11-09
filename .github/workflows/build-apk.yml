@@ -34,15 +34,32 @@ jobs:
           java-version: 21
           cache: gradle
 
-      - name: APKをビルド
+      - name: 署名鍵をSecretsから用意
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$KEYSTORE_PASSWORD" ]; then
+            echo "::error::Secrets（ANDROID_KEYSTORE_BASE64 / ANDROID_KEYSTORE_PASSWORD）が登録されていません"
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.p12"
+          echo "ANDROID_KEYSTORE_FILE=$RUNNER_TEMP/release.p12" >> "$GITHUB_ENV"
+
+      - name: APKをビルド（本番署名のリリース版）
         working-directory: android
         env:
           VERSION_CODE: ${{ github.run_number }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew assembleRelease --no-daemon --stacktrace
           mkdir -p ../dist
-          cp app/build/outputs/apk/debug/app-debug.apk ../dist/sumaho-kyukeibu-v1.0.${{ github.run_number }}.apk
+          cp app/build/outputs/apk/release/app-release.apk ../dist/sumaho-kyukeibu-v1.0.${{ github.run_number }}.apk
+
+      - name: 署名鍵を削除
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.p12"
 
       - name: ビルド結果を保存
         uses: actions/upload-artifact@v4
@@ -58,5 +75,6 @@ jobs:
           body: |
             Androidスマホでこのページを開き、下の .apk をタップしてインストールしてください。
             （テスト版です。初回は「提供元不明のアプリ」の許可が必要です）
+            ※ 2026年11月に署名鍵を新しくしました。それより前の版を入れている人は、一度アンインストールしてから入れ直してください（記録は消えます）。
           files: dist/*.apk
           make_latest: true

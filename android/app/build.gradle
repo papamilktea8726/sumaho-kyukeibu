@@ -1,13 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    // テスト配布用の固定署名鍵（Google Play公開時は別の本番鍵を使う）
+    // 本番用の署名鍵。鍵ファイルとパスワードはリポジトリに置かず、
+    // GitHub Actions が Secrets（ANDROID_KEYSTORE_BASE64 / ANDROID_KEYSTORE_PASSWORD）から用意する
     signingConfigs {
-        debug {
-            storeFile file("test-signing.keystore")
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
+        release {
+            def ks = System.getenv("ANDROID_KEYSTORE_FILE")
+            if (ks) {
+                storeFile file(ks)
+                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("ANDROID_KEY_ALIAS") ?: "sumahokyukeibu"
+                keyPassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            }
         }
     }
     namespace = "com.papamilktea.sumahokyukeibu"
@@ -27,6 +31,9 @@ android {
     }
     buildTypes {
         release {
+            if (System.getenv("ANDROID_KEYSTORE_FILE")) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

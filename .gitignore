@@ -3,3 +3,8 @@ dist/
 .DS_Store
 tools/fonts-src/
 site/
+
+# 署名鍵（絶対にコミットしない）
+*.keystore
+*.jks
+*.p12
