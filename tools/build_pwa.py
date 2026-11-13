@@ -44,9 +44,10 @@ function installGuide(){
 <p class="note">追加したら、ホーム画面の「スマホ休憩部」アイコンから開いてください。Safariで開いた記録とは別になります。</p>
 <button class="primary" data-close>わかった</button>`);
 }
+const SKIP_NAME_PROMPT=IS_IOS&&!IS_STANDALONE; // Safariで開いた記録はホーム画面版と別なので、名前は追加後に聞く
 if(IS_IOS&&!IS_STANDALONE){
   let shown=false;try{shown=sessionStorage.getItem("ios-guide")==="1";sessionStorage.setItem("ios-guide","1")}catch(e){}
-  if(!shown)setTimeout(installGuide,700);
+  if(!shown)setTimeout(()=>queueSheet(installGuide),700);
 }
 '''
 

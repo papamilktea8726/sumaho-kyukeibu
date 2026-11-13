@@ -22,7 +22,7 @@ img{max-width:100%}
   --path:#ECE3D1; --drive:#BFC4C7; --wall:#FFF8EC; --wall2:#EFE3CD; --trim:#D3BE98; --roof:#5F7290;
   --window:#BDE7F0; --water:#4FC3E0; --water2:#B4ECF6; --metal:#D7DEE2; --rock:#B6BEC2;
   --red:#E5322D; --pink:#FF8FB1; --heli:#2B3D63; --crystal:#FFFFFF; --dog:#D29455; --dog2:#8E5A2B; --dark:#24323A;
-  --good:#2E9E5B;
+  --good:#2E9E5B; --marble:#FFFFFF; --marble2:#E4EAEE;
   --f-display:"Dela Gothic One","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --f-body:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
   --r:18px;
@@ -35,7 +35,7 @@ img{max-width:100%}
   --path:#8A8370; --drive:#4A5157; --wall:#E8DFCC; --wall2:#CFC4AE; --trim:#B9A584; --roof:#46546A;
   --window:#F6D66B; --water:#2A8FB0; --water2:#5FC0DA; --metal:#9AA6AD; --rock:#7D8A8D;
   --red:#D2392F; --pink:#E07A9A; --heli:#DDE6F0; --crystal:#FFF2C0; --dog:#B67A40; --dog2:#7A4D25; --dark:#0A141A;
-  --good:#4CC67F; color-scheme:dark;
+  --good:#4CC67F; --marble:#E9EEF2; --marble2:#B9C3CA; color-scheme:dark;
 }}
 :root[data-theme="dark"]{
   --bg:#0A1C24; --surface:#112C36; --surface2:#0E2530; --ink:#E3F2F3; --muted:#8DB0B5; --line:#1F4450;
@@ -45,7 +45,7 @@ img{max-width:100%}
   --path:#8A8370; --drive:#4A5157; --wall:#E8DFCC; --wall2:#CFC4AE; --trim:#B9A584; --roof:#46546A;
   --window:#F6D66B; --water:#2A8FB0; --water2:#5FC0DA; --metal:#9AA6AD; --rock:#7D8A8D;
   --red:#D2392F; --pink:#E07A9A; --heli:#DDE6F0; --crystal:#FFF2C0; --dog:#B67A40; --dog2:#7A4D25; --dark:#0A141A;
-  --good:#4CC67F; color-scheme:dark;
+  --good:#4CC67F; --marble:#E9EEF2; --marble2:#B9C3CA; color-scheme:dark;
 }
 *{box-sizing:border-box}
 html,body{min-height:100%}
@@ -68,7 +68,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .lv b{font-family:var(--f-display);font-weight:400}
 .wave{animation:drift 9s ease-in-out infinite alternate}
 @keyframes drift{to{transform:translateX(14px)}}
-@media (prefers-reduced-motion:reduce){.wave,.coins.bump,.sprout-grow{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.wave,.coins.bump,.sprout-grow{animation:none!important}.confetti{display:none}}
 
 .progress{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
 .bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
@@ -111,9 +111,9 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .buy .coin-ico{width:16px;height:16px;font-size:9px}
 
 /* records */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .stat{background:var(--surface);border-radius:var(--r);padding:12px 8px;text-align:center;display:flex;flex-direction:column;gap:2px}
-.stat b{font-family:var(--f-display);font-weight:400;font-size:24px;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat b{font-family:var(--f-display);font-weight:400;font-size:21px;line-height:1.1;font-variant-numeric:tabular-nums}
 .stat span{font-size:11.5px;color:var(--muted);font-weight:700}
 .chart svg{width:100%;height:auto;display:block}
 .badges{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
@@ -157,12 +157,29 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
 .mchip{border:2px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:700;background:var(--surface2)}
 .mchip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
 .toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-weight:700;font-size:13.5px;z-index:40;max-width:calc(100% - 32px);text-align:center;border-radius:16px}
+/* points & nickname & celebration */
+.points{gap:8px}
+.pt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pt-box{background:var(--surface2);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pt-box .label{letter-spacing:0;font-size:11.5px}
+.pt-num{font-family:var(--f-display);font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.pt-num small{font-family:var(--f-body);font-size:13px;font-weight:800;color:var(--muted);margin-left:4px}
+.pt-next{font-size:13px;font-weight:700;color:var(--accent);margin:0}
+.text-in{font:inherit;font-weight:700;font-size:17px;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface2);color:var(--ink);width:100%}
+.sheet{position:relative}
+.cele{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.cele-num{font-family:var(--f-display);font-size:42px;line-height:1.1;color:var(--coin);font-variant-numeric:tabular-nums}
+.cele-num small{font-size:18px;margin-left:4px}
+.cele svg{width:100%;max-width:320px;border-radius:16px;background:linear-gradient(180deg,var(--sky1),var(--sky2) 62%)}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:24px}
+.confetti i{position:absolute;top:-14px;width:8px;height:13px;border-radius:2px;animation:fall 1.9s ease-in forwards}
+@keyframes fall{to{transform:translateY(360px) rotate(560deg);opacity:0}}
 </style>
 </head>
 <body>
 <div class="app">
   <header class="top">
-    <div class="brand"><b>スマホ休憩部</b><small>スマホを置くと、豪邸が育つ。</small></div>
+    <div class="brand"><b>スマホ休憩部</b><small id="hello">スマホを置くと、豪邸が育つ。</small></div>
     <div class="coins" id="coins" aria-label="コイン"><span class="coin-ico">¢</span><span id="coinNum">0</span></div>
   </header>
 
@@ -171,7 +188,16 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
       <div class="lv">Lv<b id="lvNum">1</b><span id="lvName"></span></div>
       <svg id="island" viewBox="0 0 400 270" role="img" aria-label="あなたの家"></svg>
     </div>
-    <div class="progress"><div class="bar"><i id="lvBar" style="width:0"></i></div><span id="lvText"></span></div>
+    <div class="panel points">
+      <h2>現在のポイント</h2>
+      <div class="pt-grid">
+        <div class="pt-box"><span class="label">いま使えるポイント</span><span class="pt-num" id="ptNow">0<small>ポイント</small></span></div>
+        <div class="pt-box"><span class="label">累計（使用分ふくむ）</span><span class="pt-num" id="ptNum">0<small>ポイント</small></span></div>
+      </div>
+      <p class="pt-next" id="ptNext"></p>
+      <div class="progress"><div class="bar"><i id="lvBar" style="width:0"></i></div><span id="lvText"></span></div>
+      <p class="note">累計はこれまでにもらった合計で、ショップで使っても減りません。家のグレードアップと「おめでとう」は累計で決まります。</p>
+    </div>
 
     <div class="panel">
       <h2>スマホ休憩チャレンジ</h2>
@@ -205,6 +231,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline
     <div class="panel"><h2>バッジ</h2><div class="badges" id="badges"></div></div>
     <div class="panel"><h2>最近のチャレンジ</h2><ul class="hist" id="hist"></ul></div>
     <p class="note">連続記録がとぎれても、合計の記録とコインは消えません。また今日から挑戦しよう。</p>
+    <button class="ghost" id="nameBtn" style="align-self:center;font-size:13px">ニックネームを変える</button>
     <button class="ghost" id="resetBtn" style="align-self:center;font-size:13px">記録をすべてリセット</button>
   </section>
 </div>
@@ -257,8 +284,10 @@ async function notifySchedule(a){
 }
 async function notifyCancel(){if(!LN)return;try{await LN.cancel({notifications:[{id:1},{id:2}]})}catch(e){}}
 
-const LEVELS=[0,60,180,420,900];           // 合計休憩分で家がグレードアップ
-const LEVEL_NAMES=["","小さなおうち","2階建ての家","モダンな別荘","豪邸","大豪邸"];
+const LEVELS=[0,500,1000];                 // 累計ポイントで家がグレードアップ（500ポイントごと）
+const LEVEL_NAMES=["","普通の家","西洋風のお城","ホワイトハウス"];
+const CELEBRATE_EVERY=100;                 // 100ポイントごとに「おめでとうございます」
+const NAME_MAX=12;
 const DURS=[{m:15,c:15},{m:30,c:35},{m:60,c:80}];
 const TRIAL={m:1,c:1};
 const MISSION_BONUS=10, SLEEP_COINS=40;
@@ -266,15 +295,15 @@ const CATALOG=[
   {id:"hedge",name:"植木",price:15,lv:1,max:4},
   {id:"lamp",name:"ガーデンライト",price:20,lv:1,max:4},
   {id:"palm",name:"ヤシの木",price:30,lv:1,max:3},
-  {id:"fountain",name:"噴水",price:100,lv:2,max:1},
-  {id:"pool",name:"プール",price:120,lv:2,max:1},
-  {id:"flamingo",name:"フラミンゴの浮き輪",price:40,lv:2,max:1,needs:"pool"},
-  {id:"parasol",name:"パラソル＆チェア",price:60,lv:2,max:1,needs:"pool"},
-  {id:"chandelier",name:"シャンデリア",price:150,lv:3,max:1},
-  {id:"lion",name:"金のライオン像",price:180,lv:3,max:1},
-  {id:"car",name:"高級スポーツカー",price:300,lv:3,max:1},
-  {id:"piano",name:"グランドピアノ",price:220,lv:4,max:1},
-  {id:"helicopter",name:"ヘリコプター",price:500,lv:5,max:1}
+  {id:"fountain",name:"噴水",price:100,lv:1,max:1},
+  {id:"pool",name:"プール",price:120,lv:1,max:1},
+  {id:"flamingo",name:"フラミンゴの浮き輪",price:40,lv:1,max:1,needs:"pool"},
+  {id:"parasol",name:"パラソル＆チェア",price:60,lv:1,max:1,needs:"pool"},
+  {id:"chandelier",name:"シャンデリア",price:150,lv:2,max:1},
+  {id:"lion",name:"金のライオン像",price:180,lv:2,max:1},
+  {id:"car",name:"高級スポーツカー",price:300,lv:2,max:1},
+  {id:"piano",name:"グランドピアノ",price:220,lv:2,max:1},
+  {id:"helicopter",name:"ヘリコプター",price:500,lv:3,max:1}
 ];
 const MISSIONS=[
   {g:"勉強",items:[["eitango","英単語を20個おぼえる"],["sugaku","数学の問題を5問とく"],["kanji","漢字を10個練習する"]]},
@@ -285,7 +314,7 @@ const MISSIONS=[
 const missionName=id=>{for(const g of MISSIONS)for(const[k,v]of g.items)if(k===id)return v;return null};
 const PET_STAGES=[{at:0,n:"あかちゃん"},{at:1,n:"こいぬ"},{at:3,n:"わんこ"},{at:7,n:"セレブ犬"}];
 
-function fresh(){return{v:2,coins:30,totalMin:0,sessions:[],items:[],pet:{name:"マロン",xp:0},sleeps:[],active:null,wake:"07:00"}}
+function fresh(){return{v:3,name:"",namePrompted:false,earned:0,coins:30,totalMin:0,sessions:[],items:[],pet:{name:"マロン",xp:0},sleeps:[],active:null,wake:"07:00"}}
 let mem=null, migrated=0;
 function load(){
   let s=null;
@@ -299,17 +328,34 @@ function load(){
     s.items=keep;s.coins+=migrated;s.v=2;
     if(s.pet&&s.pet.name==="ペンペン")s.pet.name="マロン";
   }
+  if(s.v<3){ // 累計ポイントを、これまでの記録から計算して引き継ぐ
+    const PAY={1:1,15:15,30:35,60:80};
+    s.earned=(s.sessions||[]).reduce((a,x)=>a+(PAY[x.min]||x.min)+(x.mDone?MISSION_BONUS:0),0)+(s.sleeps||[]).length*SLEEP_COINS;
+    s.v=3;migrated=migrated||-1;
+  }
   return s;
 }
 function save(){mem=S;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let S=load();
 if(migrated)save();
+if(migrated<0)migrated=0;
 
 const $=id=>document.getElementById(id);
 const pad=n=>String(n).padStart(2,"0");
 const dayKey=ts=>{const d=new Date(ts);return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())};
 const count=id=>S.items.filter(t=>t.id===id).length;
-function level(){let lv=1;LEVELS.forEach((t,i)=>{if(S.totalMin>=t)lv=i+1});return lv}
+const levelAt=pts=>{let lv=1;LEVELS.forEach((t,i)=>{if(pts>=t)lv=i+1});return lv};
+function level(){return levelAt(S.earned)}
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const callName=()=>S.name?esc(S.name)+"さん":"";
+/* コインをもらう：累計ポイントも増え、100ポイントごとにお祝い */
+function earn(n){
+  const before=S.earned;S.earned+=n;S.coins+=n;
+  if(Math.floor(S.earned/CELEBRATE_EVERY)>Math.floor(before/CELEBRATE_EVERY)){
+    const mark=Math.floor(S.earned/CELEBRATE_EVERY)*CELEBRATE_EVERY,lvB=levelAt(before),lvA=levelAt(S.earned);
+    pending.push(()=>celebrate(mark,lvA>lvB?lvA:0));
+  }
+}
 function streak(){
   const days=new Set(S.sessions.map(s=>s.d));
   const d=new Date();d.setHours(12,0,0,0);
@@ -357,41 +403,52 @@ const place=(id,x,y,s)=>`<g transform="translate(${x} ${y})${s&&s!==1?` scale(${
 
 function building(lv){
   let s="",chand=null,piano=null;
-  if(lv===1){
-    s+=R(226,96,10,22,"var(--wall2)")+`<polygon points="122,124 190,90 258,124" fill="var(--roof)"/>`+R(130,122,120,50,"var(--wall)")+R(182,146,16,26,"var(--wood)",'rx="2"')+WIN(142,134,24,18)+WIN(214,134,24,18);
-  }else if(lv===2){
+  if(lv===1){ // 普通の家
     s+=`<polygon points="105,94 190,58 275,94" fill="var(--roof)"/>`+R(115,92,150,80,"var(--wall)")+R(115,130,150,4,"var(--trim)");
     [132,179,226].forEach(x=>s+=WIN(x,102,22,20));[132,226].forEach(x=>s+=WIN(x,142,22,20));
-    s+=R(176,138,28,4,"var(--roof)")+R(180,142,20,30,"var(--wood)",'rx="2"');
-  }else if(lv===3){
-    s+=R(262,126,48,46,"var(--wall2)")+R(258,121,56,6,"var(--roof)")+R(112,92,150,80,"var(--wall)")+R(102,85,170,8,"var(--roof)")
-      +R(130,102,76,60,"var(--window)",'stroke="var(--trim)" stroke-width="2"')+`<path d="M180 102V162" stroke="var(--trim)" stroke-width="2"/>`
-      +WIN(222,102,28,22)+R(222,138,24,34,"var(--wood)",'rx="2"')+WIN(272,136,28,18);
-    chand={x:155,y:103,s:.85};
-  }else if(lv===4){
-    s+=`<polygon points="80,99 88,88 137,88 145,99" fill="var(--roof)"/><polygon points="235,99 243,88 292,88 300,99" fill="var(--roof)"/>`
-      +R(80,104,65,68,"var(--wall2)")+R(235,104,65,68,"var(--wall2)")+R(76,99,73,6,"var(--trim)")+R(231,99,73,6,"var(--trim)")
-      +R(145,80,90,92,"var(--wall)")+R(139,78,102,5,"var(--trim)")
-      +`<polygon points="141,78 190,52 239,78" fill="var(--wall)" stroke="var(--trim)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="190" cy="68" r="5" fill="var(--window)"/>`
-      +`<path d="M174 116V100a16 16 0 0 1 32 0V116Z" fill="var(--window)" stroke="var(--trim)" stroke-width="2"/>`
-      +WIN(92,110,16,12)+WIN(120,110,16,12)+R(88,128,50,32,"var(--window)",'stroke="var(--trim)" stroke-width="2"')
-      +WIN(247,110,16,12)+WIN(271,110,16,12)+WIN(247,132,16,22)+WIN(271,132,16,22)
-      +R(145,117,90,4,"var(--trim)")+`<path d="M180 172V146a10 10 0 0 1 20 0V172Z" fill="var(--wood)"/>`;
-    [150,166,206,222].forEach(x=>s+=R(x,121,8,51,"var(--wall)",'stroke="var(--trim)" stroke-width="1"')+R(x-2,120,12,3,"var(--trim)"));
-    chand={x:190,y:88,s:.65};piano={x:113,y:158,s:.55};
-  }else{
-    s+=`<polygon points="66,84 74,72 134,72 142,84" fill="var(--roof)"/><polygon points="238,84 246,72 306,72 314,84" fill="var(--roof)"/>`
-      +R(66,90,76,82,"var(--wall2)")+R(238,90,76,82,"var(--wall2)")+R(62,84,84,6,"var(--coin)")+R(234,84,84,6,"var(--coin)")
-      +R(166,44,48,14,"var(--wall2)")+`<path d="M162 44a28 26 0 0 1 56 0Z" fill="var(--roof)"/><path d="M190 18v-7" stroke="var(--coin)" stroke-width="2"/><circle cx="190" cy="9" r="2.6" fill="var(--coin)"/>`
-      +R(142,60,96,112,"var(--wall)")+R(136,56,108,6,"var(--coin)")
-      +`<path d="M174 104V84a16 16 0 0 1 32 0V104Z" fill="var(--window)" stroke="var(--coin)" stroke-width="2"/>`
-      +WIN(150,72,14,24,"var(--coin)")+WIN(216,72,14,24,"var(--coin)");
-    [76,98,120].forEach(x=>s+=WIN(x,98,14,18));
-    s+=R(74,128,60,34,"var(--window)",'stroke="var(--coin)" stroke-width="2"');
-    [248,270,292].forEach(x=>s+=WIN(x,98,14,18)+WIN(x,132,14,24));
-    s+=R(142,108,96,4,"var(--coin)")+`<path d="M178 172V144a12 12 0 0 1 24 0V172Z" fill="var(--wood)"/><circle cx="186" cy="160" r="1.4" fill="var(--coin)"/><circle cx="194" cy="160" r="1.4" fill="var(--coin)"/>`;
-    [148,164,208,224].forEach(x=>s+=R(x,112,8,60,"var(--wall)",'stroke="var(--trim)" stroke-width="1"')+R(x-2,111,12,3,"var(--coin)"));
-    chand={x:190,y:72,s:.62};piano={x:104,y:160,s:.6};
+    s+=R(176,138,28,4,"var(--roof)")+R(180,142,20,30,"var(--wood)",'rx="2"')+R(240,66,12,22,"var(--wall2)");
+  }else if(lv===2){ // 西洋風のお城
+    const merlons=(x0,x1,y)=>{let m="";for(let x=x0;x<x1-4;x+=12)m+=R(x,y,7,8,"var(--wall2)");return m};
+    const flag=(x,y)=>`<path d="M${x} ${y}v-14" stroke="var(--ink)" stroke-width="1.6"/><path d="M${x} ${y-14}l13 4-13 4z" fill="var(--red)"/>`;
+    const archWin=(x,y,w,h)=>`<path d="M${x} ${y+h}V${y+w/2}a${w/2} ${w/2} 0 0 1 ${w} 0V${y+h}Z" fill="var(--window)" stroke="var(--trim)" stroke-width="1.5"/>`;
+    // 城壁
+    s+=merlons(104,276,102)+R(104,110,172,62,"var(--wall2)");
+    // 中央の塔と本丸
+    s+=R(170,40,40,32,"var(--wall)")+`<polygon points="164,42 190,4 216,42" fill="var(--roof)"/>`+flag(190,6)+archWin(184,48,12,16);
+    s+=merlons(146,234,64)+R(146,72,88,100,"var(--wall)");
+    // 左右の塔
+    [[76,112],[268,304]].forEach(([a,b])=>{const c=(a+b)/2;
+      s+=R(a,78,b-a,94,"var(--wall)")+`<polygon points="${a-6},80 ${c},30 ${b+6},80" fill="var(--roof)"/>`+flag(c,32)
+        +archWin(c-6,92,12,18)+archWin(c-6,128,12,18)+R(a-6,78,b-a+12,4,"var(--trim)")});
+    // 石の目地
+    [[104,146,124],[104,146,148],[234,276,124],[234,276,148]].forEach(([a,b,y])=>s+=`<path d="M${a} ${y}H${b}" stroke="var(--trim)" stroke-width="1.2" opacity=".7"/>`);
+    s+=archWin(176,84,28,34)+R(120,126,40,28,"var(--window)",'stroke="var(--trim)" stroke-width="2"')+archWin(242,124,20,26);
+    // 門
+    s+=`<path d="M170 172V146a20 20 0 0 1 40 0V172Z" fill="var(--wood)"/><path d="M180 132V172M190 126V172M200 132V172M170 152H210M170 162H210" stroke="var(--dark)" stroke-width="1.4" opacity=".45"/>`;
+    s+=R(146,72,88,4,"var(--trim)");
+    chand={x:190,y:96,s:.5};piano={x:143,y:152,s:.5};
+  }else{ // ホワイトハウス
+    const M="var(--marble)",M2="var(--marble2)";
+    const pedWin=(x,y,w,h)=>WIN(x,y,w,h,M2)+`<polygon points="${x-2},${y-1} ${x+w/2},${y-6} ${x+w+2},${y-1}" fill="${M}" stroke="${M2}" stroke-width="1"/>`;
+    // 屋根の手すり
+    s+=R(66,74,248,4,M2);for(let x=70;x<312;x+=7)s+=R(x,78,3,8,M);
+    s+=R(62,86,256,6,M,`stroke="${M2}" stroke-width="1"`);
+    // 本館
+    s+=R(66,92,248,80,M)+R(66,128,248,3,M2);
+    [80,104,128].forEach(x=>s+=pedWin(x,104,14,18));[238,262,286].forEach(x=>s+=pedWin(x,104,14,18)+pedWin(x,140,14,22));
+    s+=R(80,136,48,28,"var(--window)",`stroke="${M2}" stroke-width="2"`);
+    // 柱の奥の壁と玄関
+    s+=R(140,100,100,72,M2)+`<path d="M180 172V146a10 10 0 0 1 20 0V172Z" fill="var(--wood)"/>`+`<path d="M180 140a10 10 0 0 1 20 0Z" fill="var(--window)"/>`
+      +pedWin(152,138,12,18)+pedWin(216,138,12,18);
+    // 三角の屋根（ペディメント）と柱
+    s+=R(134,92,112,9,M,`stroke="${M2}" stroke-width="1"`)+`<polygon points="134,92 190,62 246,92" fill="${M}" stroke="${M2}" stroke-width="1.5" stroke-linejoin="round"/><circle cx="190" cy="81" r="4.5" fill="none" stroke="${M2}" stroke-width="1.5"/>`;
+    [142,164,208,230].forEach(x=>s+=R(x,104,8,64,M,`stroke="${M2}" stroke-width="1"`)+R(x-2,101,12,4,M2)+R(x-2,166,12,3,M2));
+    s+=R(144,169,92,3,M2)+R(138,172,104,3,M2);
+    // 旗
+    s+=`<path d="M190 62V34" stroke="var(--ink)" stroke-width="1.6"/>`;
+    for(let i=0;i<5;i++)s+=R(191,35+i*2.4,20,1.2,"var(--red)")+R(191,36.2+i*2.4,20,1.2,"#FFFFFF");
+    s+=R(191,35,8,6,"var(--heli)");
+    chand={x:190,y:104,s:.45};piano={x:106,y:162,s:.55};
   }
   return{s,chand,piano};
 }
@@ -411,8 +468,7 @@ function drawPet(x,y,s){
 }
 function cloud(x,y,s){return`<g transform="translate(${x} ${y}) scale(${s})" fill="var(--cloud)" opacity=".9"><circle r="9"/><circle cx="11" cy="-4" r="11"/><circle cx="23" cy="1" r="8"/><rect y="0" width="23" height="8"/></g>`}
 
-function renderIsland(){
-  const lv=level();
+function sceneSvg(lv,full){
   let o=`<circle cx="374" cy="32" r="14" fill="var(--sun)"/>`;
   [[28,20],[110,64],[148,14],[250,52],[300,18],[372,30],[214,30],[90,30]].forEach(([x,y])=>o+=`<circle cx="${x}" cy="${y}" r="1.3" fill="var(--star)"/>`);
   o+=`<g class="wave">${cloud(108,36,.9)}${cloud(232,22,.75)}${cloud(352,94,.6)}</g>`;
@@ -424,16 +480,24 @@ function renderIsland(){
   const B=building(lv);o+=B.s;
   if(count("chandelier")&&B.chand)o+=place("chandelier",B.chand.x,B.chand.y,B.chand.s);
   if(count("piano")&&B.piano)o+=place("piano",B.piano.x,B.piano.y,B.piano.s);
+  if(!full)return o;
   const parts=[],seen={};
   S.items.forEach(t=>{if(!POS[t.id]||t.id==="helicopter")return;const i=seen[t.id]=(seen[t.id]||0);seen[t.id]++;const p=POS[t.id][i];if(p)parts.push({y:p.y,s:place(t.id,p.x,p.y)})});
   parts.push({y:264,s:drawPet(236,264)});
   parts.sort((a,b)=>a.y-b.y).forEach(p=>o+=p.s);
   if(count("helicopter"))o+=`<g class="wave">${place("helicopter",322,52)}</g>`;
-  $("island").innerHTML=o;
+  return o;
+}
+function renderIsland(){
+  const lv=level();
+  $("island").innerHTML=sceneSvg(lv,true);
   $("lvNum").textContent=lv;$("lvName").textContent=LEVEL_NAMES[lv];
+  $("ptNum").innerHTML=`${S.earned}<small>ポイント</small>`;$("ptNow").innerHTML=`${S.coins}<small>ポイント</small>`;
+  $("ptNext").textContent=`次の「おめでとう」まで、あと ${CELEBRATE_EVERY-S.earned%CELEBRATE_EVERY} ポイント`;
   const next=LEVELS[lv];
-  if(next){const prev=LEVELS[lv-1];$("lvBar").style.width=Math.min(100,(S.totalMin-prev)/(next-prev)*100)+"%";$("lvText").textContent=`あと${next-S.totalMin}分の休憩で「${LEVEL_NAMES[lv+1]}」にグレードアップ（合計 ${S.totalMin}分）`}
-  else{$("lvBar").style.width="100%";$("lvText").textContent=`最高ランクの大豪邸！ 合計 ${S.totalMin}分`}
+  if(next){const prev=LEVELS[lv-1];$("lvBar").style.width=Math.min(100,(S.earned-prev)/(next-prev)*100)+"%";$("lvText").textContent=`あと${next-S.earned}ポイントで、家が「${LEVEL_NAMES[lv+1]}」にグレードアップ`}
+  else{$("lvBar").style.width="100%";$("lvText").textContent="最高ランクのホワイトハウスに住んでいます！"}
+  $("hello").textContent=S.name?`${S.name}さんのおうち`:"スマホを置くと、豪邸が育つ。";
   $("petPreview").innerHTML=`<ellipse cx="30" cy="53" rx="22" ry="4" fill="var(--grass)"/>`+drawPet(31,52,1.5);
   $("petName").textContent=S.pet.name;
   const st=petStage(),nx=PET_STAGES.find(p=>p.at>S.pet.xp);
@@ -497,21 +561,20 @@ function complete(){
   const now=Date.now();
   if(a.type==="sleep"){
     const d=dayKey(now),already=S.sleeps.includes(d);
-    if(!already){S.sleeps.push(d);S.pet.xp++;S.coins+=a.coins}
+    if(!already){S.sleeps.push(d);S.pet.xp++;earn(a.coins)}
     save();$("focus").hidden=true;chime();renderAll();bumpCoins();
     openSheet(`<h3>おはよう！おやすみチャレンジ成功</h3>${already?`<p>今日の分はもう記録済みです。</p>`:`<div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div><p>${S.pet.name}が少し育ちました（成功 ${S.pet.xp}回）。</p>`}<button class="primary" data-close>家を見る</button>`);
     return;
   }
   const sess={d:dayKey(now),t:now,min:a.min,mission:a.mission,mDone:false};
-  S.sessions.push(sess);S.totalMin+=a.min;S.coins+=a.coins;
-  const lvBefore=LEVELS.filter(t=>S.totalMin-a.min>=t).length,lvAfter=level();
+  S.sessions.push(sess);S.totalMin+=a.min;earn(a.coins);
   save();$("focus").hidden=true;chime();renderAll();bumpCoins();
   let h=`<h3>${a.min}分のスマホ休憩、達成！</h3><div class="reward"><span class="coin-ico" style="width:30px;height:30px;font-size:15px">¢</span>+${a.coins}</div>`;
-  if(lvAfter>lvBefore)h+=`<p><b>家が「${LEVEL_NAMES[lvAfter]}」にグレードアップ！</b> 新しいアイテムが解放されました。</p>`;
+  h+=`<p>累計 <b>${S.earned}</b> ポイントになりました。</p>`;
   if(a.mission){h+=`<p>ミッション「${missionName(a.mission)}」はできた？</p><div class="btnrow"><button class="primary" id="mYes">できた！ +${MISSION_BONUS}</button><button class="ghost" data-close>今回はパス</button></div>`}
   else h+=`<button class="primary" data-close>家を見る</button>`;
   openSheet(h);
-  const y=$("mYes");if(y)y.addEventListener("click",()=>{sess.mDone=true;S.coins+=MISSION_BONUS;save();renderAll();bumpCoins();closeSheet();toast("ミッション達成！ +"+MISSION_BONUS+"コイン")});
+  const y=$("mYes");if(y)y.addEventListener("click",()=>{sess.mDone=true;earn(MISSION_BONUS);save();renderAll();bumpCoins();closeSheet();toast("ミッション達成！ +"+MISSION_BONUS+"コイン")});
 }
 $("giveUpBtn").addEventListener("click",()=>{
   const a=S.active;if(!a)return;
@@ -536,7 +599,7 @@ function lockReason(it){
 }
 function renderShop(){
   const lv=level();
-  $("slotNote").textContent=`いまの家：Lv${lv}「${LEVEL_NAMES[lv]}」`+(lv<5?"。家がグレードアップすると、新しいアイテムが解放されます。":"。すべてのアイテムが解放されています。");
+  $("slotNote").textContent=`いまの家：Lv${lv}「${LEVEL_NAMES[lv]}」`+(lv<LEVELS.length?"。家がグレードアップすると、新しいアイテムが解放されます。":"。すべてのアイテムが解放されています。");
   $("shop").innerHTML=CATALOG.map(it=>{
     const own=count(it.id),lock=lockReason(it),short=it.price-S.coins;
     const label=lock||`<span class="coin-ico">¢</span>${it.price}`+(short>0?`<small>あと${short}</small>`:"");
@@ -547,7 +610,7 @@ $("shop").addEventListener("click",e=>{
   const b=e.target.closest(".buy");if(!b||b.disabled)return;
   const it=CATALOG.find(c=>c.id===b.dataset.id),lock=lockReason(it);
   if(lock==="プールが必要"){toast("先にプールを買うと置けるようになります");return}
-  if(lock){toast(`家が「${LEVEL_NAMES[it.lv]}」になると買えます。あと${Math.max(0,LEVELS[it.lv-1]-S.totalMin)}分休憩しよう`);return}
+  if(lock){toast(`家が「${LEVEL_NAMES[it.lv]}」になると買えます。累計ポイントがあと${Math.max(0,LEVELS[it.lv-1]-S.earned)}`);return}
   if(S.coins<it.price){toast(`コインがあと${it.price-S.coins}枚たりません。チャレンジでためよう`);return}
   S.coins-=it.price;S.items.push({id:it.id});save();renderAll();bumpCoins();toast(it.name+"を手に入れました！");
 });
@@ -561,12 +624,12 @@ const BADGES=[
   {n:"合計5時間",m:"5h",ok:()=>S.totalMin>=300},
   {n:"ミッション10回",m:"10",ok:()=>S.sessions.filter(s=>s.mDone).length>=10},
   {n:"おやすみ3回",m:"夜",ok:()=>S.pet.xp>=3},
-  {n:"別荘を手に入れた",m:"邸",ok:()=>level()>=3},
+  {n:"お城に住んだ",m:"城",ok:()=>level()>=2},
   {n:"スポーツカーを買った",m:"車",ok:()=>count("car")>0}
 ];
 function renderLog(){
   const st=streak();
-  $("stats").innerHTML=[[st,"連続日数"],[S.totalMin,"合計（分）"],[S.sessions.length,"成功回数"]].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
+  $("stats").innerHTML=[[st,"連続日数"],[S.earned,"累計ポイント"],[S.totalMin,"合計（分）"],[S.sessions.length,"成功回数"]].map(([v,l])=>`<div class="stat"><b>${v}</b><span>${l}</span></div>`).join("");
   const days=[];const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()-6);
   for(let i=0;i<7;i++){const k=dayKey(d);days.push({k,w:"日月火水木金土"[d.getDay()],m:S.sessions.filter(s=>s.d===k).reduce((a,s)=>a+s.min,0)});d.setDate(d.getDate()+1)}
   const mx=Math.max(...days.map(x=>x.m));const top=mx<=30?30:mx<=60?60:mx<=120?120:Math.ceil(mx/60)*60;
@@ -583,13 +646,37 @@ function renderLog(){
   $("hist").innerHTML=rec.length?rec.map(r=>{const t=new Date(r.t);return`<li><span>${r.min}分の休憩${r.mission?`・${missionName(r.mission)}${r.mDone?"（できた）":""}`:""}</span><span>${t.getMonth()+1}/${t.getDate()} ${t.getHours()}:${pad(t.getMinutes())}</span></li>`}).join(""):`<li><span>まだ記録がありません。まずは15分から挑戦してみよう。</span></li>`;
 }
 $("resetBtn").addEventListener("click",()=>{
-  openSheet(`<h3>記録をリセットしますか？</h3><p>コイン・家・ペット・記録がすべて最初に戻ります。元には戻せません。</p><div class="btnrow"><button class="ghost" id="rYes">リセットする</button><button class="primary" data-close>やめておく</button></div>`);
-  $("rYes").addEventListener("click",()=>{S=fresh();save();closeSheet();renderAll();toast("リセットしました")});
+  openSheet(`<h3>記録をリセットしますか？</h3><p>コイン・累計ポイント・家・ペット・記録がすべて最初に戻ります（ニックネームは残ります）。元には戻せません。</p><div class="btnrow"><button class="ghost" id="rYes">リセットする</button><button class="primary" data-close>やめておく</button></div>`);
+  $("rYes").addEventListener("click",()=>{const nm=S.name;S=fresh();S.name=nm;S.namePrompted=true;save();closeSheet();renderAll();toast("リセットしました")});
 });
 
 /* ---------- ui helpers ---------- */
+let pending=[];
 function openSheet(h){$("sheet").innerHTML=h;$("modal").hidden=false;$("sheet").querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",closeSheet));const f=$("sheet").querySelector("button");if(f)f.focus()}
-function closeSheet(){$("modal").hidden=true}
+function closeSheet(){$("modal").hidden=true;if(pending.length){const f=pending.shift();setTimeout(f,180)}}
+/* 開いている画面があれば、閉じたあとに順番に出す */
+function queueSheet(f){if($("modal").hidden&&!pending.length)f();else pending.push(f)}
+
+/* ---------- nickname ---------- */
+function openNameSheet(first){
+  S.namePrompted=true;save();
+  openSheet(`<h3>${first?"ニックネームを決めよう":"ニックネームを変える"}</h3><p>アプリの中であなたを呼ぶ名前です。本名じゃなくてOK。${first?"あとからでも変えられます。":""}</p><label class="label" for="nameInput">ニックネーム（${NAME_MAX}文字まで）</label><input class="text-in" id="nameInput" maxlength="${NAME_MAX}" autocomplete="off" placeholder="例：ゆう" value="${esc(S.name)}"><div class="btnrow"><button class="primary" id="nameOk">決定</button><button class="ghost" data-close>${first?"あとで":"やめる"}</button></div>`);
+  const inp=$("nameInput"),ok=()=>{const v=inp.value.replace(/\s+/g," ").trim().slice(0,NAME_MAX);if(!v){toast("ニックネームを入れてね");inp.focus();return}S.name=v;save();renderAll();closeSheet();toast(`よろしくね、${v}さん！`)};
+  $("nameOk").addEventListener("click",ok);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ok()}});
+}
+$("nameBtn").addEventListener("click",()=>openNameSheet(false));
+
+/* ---------- celebration ---------- */
+function celebrate(mark,newLv){
+  const colors=["var(--coin)","var(--accent)","var(--red)","var(--pink)","var(--water)","var(--good)"];
+  let cf="";for(let i=0;i<22;i++)cf+=`<i style="left:${(i*4.6+Math.random()*3).toFixed(1)}%;background:${colors[i%colors.length]};animation-delay:${(Math.random()*.6).toFixed(2)}s"></i>`;
+  let h=`<div class="confetti" aria-hidden="true">${cf}</div><div class="cele"><h3>${callName()?callName()+"、":""}おめでとうございます！</h3><div class="cele-num">${mark}<small>ポイント</small></div><p>累計 ${mark} ポイントを達成しました。</p>`;
+  if(newLv)h+=`<svg viewBox="40 0 320 190" role="img" aria-label="${LEVEL_NAMES[newLv]}">${sceneSvg(newLv,false)}</svg><p><b>家が「${LEVEL_NAMES[newLv]}」になりました！</b><br>新しいアイテムも買えるようになりました。</p>`;
+  else h+=`<p class="note">次は ${mark+CELEBRATE_EVERY} ポイントをめざそう。</p>`;
+  h+=`</div><button class="primary" data-close>${newLv?"新しい家を見る":"やったね！"}</button>`;
+  openSheet(h);chime();
+}
 $("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeSheet()});
 let tt;function toast(m){const t=$("toast");t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2600)}
 function bumpCoins(){const c=$("coins");c.classList.remove("bump");void c.offsetWidth;c.classList.add("bump")}
@@ -609,6 +696,7 @@ function renderAll(){$("coinNum").textContent=S.coins;$("wakeInput").value=S.wak
 renderAll();
 if(migrated)toast(`豪邸モードになりました！ 島のアイテムはコインで返却しました（+${migrated}）`);
 if(S.active)showFocus();
+else if(!S.name&&!S.namePrompted&&!(typeof SKIP_NAME_PROMPT!=="undefined"&&SKIP_NAME_PROMPT))setTimeout(()=>queueSheet(()=>openNameSheet(true)),400);
 })();
 </script>
 
